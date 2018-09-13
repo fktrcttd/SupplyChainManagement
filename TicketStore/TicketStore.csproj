@@ -197,6 +197,7 @@
     <Compile Include="DataService\Configurations\DataContextConfiguration.cs" />
     <Compile Include="DataService\DummyCondition.cs" />
     <Compile Include="DataService\Entity.cs" />
+    <Compile Include="DataService\Enums\TaskStatus.cs" />
     <Compile Include="DataService\Extensions\TypeExtension.cs" />
     <Compile Include="DataService\FileLogger.cs" />
     <Compile Include="DataService\Helpers\ReflectionHelper.cs" />
@@ -207,7 +208,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DataService\Models\Departament.cs" />
     <Compile Include="DataService\Models\Project.cs" />
+    <Compile Include="DataService\Models\Task.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

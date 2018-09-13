@@ -16,7 +16,7 @@ using TicketStore.Models;
 namespace TicketStore.Core
 {
     [DbConfigurationType(typeof(DataContextConfiguration))]
-    public class ApplicationDataContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDataContext : ApplicationDbContext
     {
         private readonly MethodInfo _addMethod = typeof(ApplicationDataContext).GetMethods(BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(x => x.IsGenericMethodDefinition && x.Name == "Add");
         private readonly MethodInfo _deleteMethod = typeof(ApplicationDataContext).GetMethods(BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(x => x.IsGenericMethodDefinition && x.Name == "Delete");
@@ -36,7 +36,7 @@ namespace TicketStore.Core
         private static ApplicationDataContext _applicationDataContext;
 
         public ApplicationDataContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base()
         {
             SetLogging();
             this.Configuration.ValidateOnSaveEnabled = false;
@@ -208,23 +208,53 @@ namespace TicketStore.Core
                 return Set<Project>();
             }
         }
+       
+        
+        public IDbSet<Task> Tasks
+        {
+            get
+            {
+                EnsureThreadSafety();
+                return Set<Task>();
+            }
+        }
+        
+        public IDbSet<Departament> Departaments
+        {
+            get
+            {
+                EnsureThreadSafety();
+                return Set<Departament>();
+            }
+        }
+        
+      
+       
 
         #endregion
 
         #region Overrides
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        
+        
+        /*protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<CarPartUnderSection>()
             //    .HasRequired(x => x.CarPartSection)
             //    .WithMany()
             //    .HasForeignKey(x => x.CarPartSectionId)
             //    .WillCascadeOnDelete(false);
+            
+            modelBuilder.Entity<ApplicationUser>().ToTable("User");
+            modelBuilder.Entity<ApplicationRole>().ToTable("Role");
+            modelBuilder.Entity<ApplicationUserClaim>().ToTable("UserClaim");
+            modelBuilder.Entity<ApplicationUserRole>().ToTable("UserRole");
+            modelBuilder.Entity<ApplicationUserLogin>().ToTable("UserLogin");
 
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
             base.OnModelCreating(modelBuilder);
-        }
+        }*/
 
         #endregion
     }

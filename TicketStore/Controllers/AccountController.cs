@@ -175,9 +175,9 @@ namespace TicketStore.Controllers
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string userId, string code)
-        {
-            if (userId == null || code == null)
+        public async Task<ActionResult> ConfirmEmail(int userId, string code) 
+        { 
+            if (userId == default(int) || code == null)  
             {
                 return View("Error");
             }
