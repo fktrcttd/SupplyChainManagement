@@ -5,6 +5,8 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
+using TicketStore.Core;
+using TicketStore.DataService;
 using TicketStore.Models;
 
 namespace TicketStore
@@ -22,19 +24,20 @@ namespace TicketStore
             // Включение использования файла cookie, в котором приложение может хранить информацию для пользователя, выполнившего вход,
             // и использование файла cookie для временного хранения информации о входах пользователя с помощью стороннего поставщика входа
             // Настройка файла cookie для входа
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
-            {
-                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login"),
-                Provider = new CookieAuthenticationProvider
-                {
-                    // Позволяет приложению проверять метку безопасности при входе пользователя.
-                    // Эта функция безопасности используется, когда вы меняете пароль или добавляете внешнее имя входа в свою учетную запись.  
-                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
-                        validateInterval: TimeSpan.FromMinutes(30),
-                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
-                }
-            });            
+            app.UseCookieAuthentication(new CookieAuthenticationOptions 
+            { 
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie, 
+                LoginPath = new PathString("/Account/Login"), 
+                Provider = new CookieAuthenticationProvider 
+                { 
+                    OnValidateIdentity = SecurityStampValidator
+                        .OnValidateIdentity<ApplicationUserManager, ApplicationUser, int>( 
+                            validateInterval: TimeSpan.FromMinutes(30), 
+                            regenerateIdentityCallback: (manager, user) => 
+                                user.GenerateUserIdentityAsync(manager), 
+                            getUserIdCallback:(id)=>(id.GetUserId<int>()))
+                } 
+            });        
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Позволяет приложению временно хранить информацию о пользователе, пока проверяется второй фактор двухфакторной проверки подлинности.
