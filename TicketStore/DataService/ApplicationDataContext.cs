@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Web;
+using Microsoft.AspNet.Identity.EntityFramework;
 using TicketStore.Core;
 using TicketStore.Core.Configurations;
 using TicketStore.DataService.Models;
@@ -15,8 +17,25 @@ using TicketStore.Models;
 namespace TicketStore.DataService
 {
     [DbConfigurationType(typeof(DataContextConfiguration))]
-    public class ApplicationDataContext : ApplicationDbContext
+    public class ApplicationDataContext : IdentityDbContext<ApplicationUser, ApplicationRole, int, ApplicationUserLogin, ApplicationUserRole,
+        ApplicationUserClaim>
     {
+        public ApplicationDataContext()
+            : base("DefaultConnection")
+        {
+            SetLogging();
+            this.Configuration.ValidateOnSaveEnabled = false;
+        }
+        
+        public static ApplicationDataContext Create()
+        {
+            return new ApplicationDataContext();
+        }
+
+        static ApplicationDataContext()
+        {
+            Database.SetInitializer(new IdentityDbInit());
+        }
         
         public readonly MethodInfo _addMethod = typeof(ApplicationDataContext).GetMethods(BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(x => x.IsGenericMethodDefinition && x.Name == "Add");
         public readonly MethodInfo _deleteMethod = typeof(ApplicationDataContext).GetMethods(BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(x => x.IsGenericMethodDefinition && x.Name == "Delete");
@@ -29,13 +48,6 @@ namespace TicketStore.DataService
 
         [ThreadStatic]
         private static ApplicationDataContext _applicationDataContext;
-
-        public ApplicationDataContext()
-            : base()
-        {
-            SetLogging();
-            this.Configuration.ValidateOnSaveEnabled = false;
-        }
         
         private void SetLogging()
         {
@@ -177,6 +189,18 @@ namespace TicketStore.DataService
 
             if (!inTransactionScope)
                 SaveChanges();
+        }
+        
+        
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ApplicationUser>().ToTable("Users");
+            modelBuilder.Entity<ApplicationRole>().ToTable("Roles");
+            modelBuilder.Entity<ApplicationUserClaim>().ToTable("UserClaims");
+            modelBuilder.Entity<ApplicationUserRole>().ToTable("UserRoles");
+            modelBuilder.Entity<ApplicationUserLogin>().ToTable("UserLogin");
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
 
         #endregion

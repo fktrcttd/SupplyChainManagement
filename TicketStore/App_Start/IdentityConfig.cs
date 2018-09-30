@@ -32,7 +32,21 @@ namespace TicketStore
             return Task.FromResult(0);
         }
     }
+    
+    public class ApplicationRoleManager : RoleManager<ApplicationRole, int>
+    {
+        public ApplicationRoleManager(IRoleStore<ApplicationRole,int> roleStore)
+            : base(roleStore) { }
 
+        public static ApplicationRoleManager Create(
+            IdentityFactoryOptions<ApplicationRoleManager> options, 
+            IOwinContext context)
+        {
+            var manager = new ApplicationRoleManager(
+                new ApplicationRoleStore(context.Get<ApplicationDataContext>()));
+            return manager;
+        }
+    }
     // Настройка диспетчера пользователей приложения. UserManager определяется в ASP.NET Identity и используется приложением.
     public class ApplicationUserManager : UserManager<ApplicationUser, int>
     {
@@ -45,7 +59,7 @@ namespace TicketStore
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
             var manager =new ApplicationUserManager(
-                new ApplicatonUserStore(context.Get<ApplicationDbContext>())); 
+                new ApplicatonUserStore(context.Get<ApplicationDataContext>())); 
             // Настройка логики проверки имен пользователей
             manager.UserValidator = new UserValidator<ApplicationUser, int>(manager) 
             {

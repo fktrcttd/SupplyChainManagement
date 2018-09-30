@@ -49,9 +49,19 @@ namespace TicketStore.Models
     public class ApplicatonUserStore :
         UserStore<ApplicationUser, ApplicationRole, int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>
     {
-        public ApplicatonUserStore(ApplicationDbContext context)
+        public ApplicatonUserStore(ApplicationDataContext context)
             : base(context)
         {
+            
+        }
+    }
+    
+    public class ApplicationRoleStore : RoleStore<ApplicationRole, int, ApplicationUserRole>
+    {
+        public ApplicationRoleStore(ApplicationDataContext context)
+            : base(context)
+        {
+            
         }
     }
 

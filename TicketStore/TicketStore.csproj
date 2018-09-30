@@ -202,7 +202,6 @@
     <Compile Include="DataService\Attributes\PropertyOrderAttribute.cs" />
     <Compile Include="DataService\CascadeDeleteProcessor.cs" />
     <Compile Include="DataService\Configurations\DataContextConfiguration.cs" />
-    <Compile Include="DataService\ApplicationDbContext.cs" />
     <Compile Include="DataService\DummyCondition.cs" />
     <Compile Include="DataService\Entity.cs" />
     <Compile Include="DataService\Enums\TaskStatus.cs" />
@@ -215,6 +214,7 @@
     <Compile Include="DataService\Interfaces\IPropertyCondition.cs" />
     <Compile Include="DataService\JetBrains.cs" />
     <Compile Include="DataService\Models\Departament.cs" />
+    <Compile Include="DataService\Models\InitDbSetup.cs" />
     <Compile Include="DataService\Models\Project.cs" />
     <Compile Include="DataService\Models\Task.cs" />
     <Compile Include="Global.asax.cs">
