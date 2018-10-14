@@ -4,18 +4,18 @@ namespace TicketStore.Core
 {
     public interface IEntityEvent
     {
-        void Added(ApplicationDataContext context);
+        void Added(AppDataContext context);
 
-        void Adding(ApplicationDataContext context);
-
-
-        void Deleting(ApplicationDataContext context);
-
-        void Deleted(ApplicationDataContext context);
+        void Adding(AppDataContext context);
 
 
-        void Updating(ApplicationDataContext context);
+        void Deleting(AppDataContext context);
 
-        void Updated(ApplicationDataContext context);
+        void Deleted(AppDataContext context);
+
+
+        void Updating(AppDataContext context);
+
+        void Updated(AppDataContext context);
     }
 }

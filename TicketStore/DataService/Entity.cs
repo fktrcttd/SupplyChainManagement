@@ -62,32 +62,32 @@ namespace TicketStore.Core
             }
         }
 
-        public virtual void Added(ApplicationDataContext context)
+        public virtual void Added(AppDataContext context)
         {
             
         }
 
-        public virtual void Adding(ApplicationDataContext context)
+        public virtual void Adding(AppDataContext context)
         {
             LastModifed = DateTime.Now;
         }
 
-        public virtual void Deleting(ApplicationDataContext context)
+        public virtual void Deleting(AppDataContext context)
         {
 
         }
 
-        public virtual void Deleted(ApplicationDataContext context)
+        public virtual void Deleted(AppDataContext context)
         {
 
         }
 
-        public virtual void Updating(ApplicationDataContext context)
+        public virtual void Updating(AppDataContext context)
         {
             LastModifed = DateTime.Now;
         }
 
-        public virtual void Updated(ApplicationDataContext context)
+        public virtual void Updated(AppDataContext context)
         {
 
         }

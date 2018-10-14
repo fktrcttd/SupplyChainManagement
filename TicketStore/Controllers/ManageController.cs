@@ -14,15 +14,15 @@ namespace TicketStore.Controllers
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private AppUserManager _appUserManager;
 
         public ManageController()
         {
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(AppUserManager appUserManager, ApplicationSignInManager signInManager)
         {
-            UserManager = userManager;
+            AppUserManager = appUserManager;
             SignInManager = signInManager;
         }
 
@@ -38,15 +38,15 @@ namespace TicketStore.Controllers
             }
         }
 
-        public ApplicationUserManager UserManager
+        public AppUserManager AppUserManager
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _appUserManager ?? HttpContext.GetOwinContext().GetUserManager<AppUserManager>();
             }
             private set
             {
-                _userManager = value;
+                _appUserManager = value;
             }
         }
 
@@ -67,9 +67,9 @@ namespace TicketStore.Controllers
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(User.Identity.GetUserId<int>()),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(User.Identity.GetUserId<int>()),
-                Logins = await UserManager.GetLoginsAsync(User.Identity.GetUserId<int>()),
+                PhoneNumber = await AppUserManager.GetPhoneNumberAsync(User.Identity.GetUserId<int>()),
+                TwoFactor = await AppUserManager.GetTwoFactorEnabledAsync(User.Identity.GetUserId<int>()),
+                Logins = await AppUserManager.GetLoginsAsync(User.Identity.GetUserId<int>()),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
             return View(model);
@@ -82,11 +82,11 @@ namespace TicketStore.Controllers
         public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
         {
             ManageMessageId? message;
-            var result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId<int>(), 
+            var result = await AppUserManager.RemoveLoginAsync(User.Identity.GetUserId<int>(), 
                 new UserLoginInfo(loginProvider, providerKey));
             if (result.Succeeded)
             {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+                var user = await AppUserManager.FindByIdAsync(User.Identity.GetUserId<int>());
                 if (user != null)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -118,16 +118,16 @@ namespace TicketStore.Controllers
                 return View(model);
             }
             // Создание и отправка маркера
-            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(
+            var code = await AppUserManager.GenerateChangePhoneNumberTokenAsync(
                 User.Identity.GetUserId<int>(), model.Number);
-            if (UserManager.SmsService != null)
+            if (AppUserManager.SmsService != null)
             {
                 var message = new IdentityMessage
                 {
                     Destination = model.Number,
                     Body = "Ваш код безопасности: " + code
                 };
-                await UserManager.SmsService.SendAsync(message);
+                await AppUserManager.SmsService.SendAsync(message);
             }
             return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
         }
@@ -138,8 +138,8 @@ namespace TicketStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EnableTwoFactorAuthentication()
         {
-            await UserManager.SetTwoFactorEnabledAsync(User.Identity.GetUserId<int>(), true);
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+            await AppUserManager.SetTwoFactorEnabledAsync(User.Identity.GetUserId<int>(), true);
+            var user = await AppUserManager.FindByIdAsync(User.Identity.GetUserId<int>());
             if (user != null)
             {
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -153,8 +153,8 @@ namespace TicketStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DisableTwoFactorAuthentication()
         {
-            await UserManager.SetTwoFactorEnabledAsync(User.Identity.GetUserId<int>(), false);
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+            await AppUserManager.SetTwoFactorEnabledAsync(User.Identity.GetUserId<int>(), false);
+            var user = await AppUserManager.FindByIdAsync(User.Identity.GetUserId<int>());
             if (user != null)
             {
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -166,7 +166,7 @@ namespace TicketStore.Controllers
         // GET: /Manage/VerifyPhoneNumber
         public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
         {
-            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(
+            var code = await AppUserManager.GenerateChangePhoneNumberTokenAsync(
                 User.Identity.GetUserId<int>(), phoneNumber);
             // Отправка SMS через поставщик SMS для проверки номера телефона
             return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
@@ -182,10 +182,10 @@ namespace TicketStore.Controllers
             {
                 return View(model);
             }
-            var result = await UserManager.ChangePhoneNumberAsync(User.Identity.GetUserId<int>(), model.PhoneNumber, model.Code);
+            var result = await AppUserManager.ChangePhoneNumberAsync(User.Identity.GetUserId<int>(), model.PhoneNumber, model.Code);
             if (result.Succeeded)
             {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+                var user = await AppUserManager.FindByIdAsync(User.Identity.GetUserId<int>());
                 if (user != null)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -203,12 +203,12 @@ namespace TicketStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RemovePhoneNumber()
         {
-            var result = await UserManager.SetPhoneNumberAsync(User.Identity.GetUserId<int>(), null);
+            var result = await AppUserManager.SetPhoneNumberAsync(User.Identity.GetUserId<int>(), null);
             if (!result.Succeeded)
             {
                 return RedirectToAction("Index", new { Message = ManageMessageId.Error });
             }
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+            var user = await AppUserManager.FindByIdAsync(User.Identity.GetUserId<int>());
             if (user != null)
             {
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -233,13 +233,13 @@ namespace TicketStore.Controllers
             {
                 return View(model);
             }
-            IdentityResult result = await UserManager.ChangePasswordAsync(
+            IdentityResult result = await AppUserManager.ChangePasswordAsync(
                 User.Identity.GetUserId<int>(),
                 model.OldPassword, 
                 model.NewPassword);
             if (result.Succeeded)
             {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>()); 
+                var user = await AppUserManager.FindByIdAsync(User.Identity.GetUserId<int>()); 
                 if (user != null)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -265,10 +265,10 @@ namespace TicketStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId<int>(), model.NewPassword); 
+                var result = await AppUserManager.AddPasswordAsync(User.Identity.GetUserId<int>(), model.NewPassword); 
                 if (result.Succeeded)
                 {
-                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+                    var user = await AppUserManager.FindByIdAsync(User.Identity.GetUserId<int>());
                     if (user != null)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -290,12 +290,12 @@ namespace TicketStore.Controllers
                 message == ManageMessageId.RemoveLoginSuccess ? "Внешнее имя входа удалено."
                 : message == ManageMessageId.Error ? "Произошла ошибка."
                 : "";
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+            var user = await AppUserManager.FindByIdAsync(User.Identity.GetUserId<int>());
             if (user == null)
             {
                 return View("Error");
             }
-            var userLogins = await UserManager.GetLoginsAsync(User.Identity.GetUserId<int>());
+            var userLogins = await AppUserManager.GetLoginsAsync(User.Identity.GetUserId<int>());
             var otherLogins = AuthenticationManager.GetExternalAuthenticationTypes().Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider)).ToList();
             ViewBag.ShowRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
             return View(new ManageLoginsViewModel
@@ -324,16 +324,16 @@ namespace TicketStore.Controllers
             {
                 return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
             }
-            var result = await UserManager.AddLoginAsync(User.Identity.GetUserId<int>(), loginInfo.Login);
+            var result = await AppUserManager.AddLoginAsync(User.Identity.GetUserId<int>(), loginInfo.Login);
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && _userManager != null)
+            if (disposing && _appUserManager != null)
             {
-                _userManager.Dispose();
-                _userManager = null;
+                _appUserManager.Dispose();
+                _appUserManager = null;
             }
 
             base.Dispose(disposing);
@@ -361,7 +361,7 @@ namespace TicketStore.Controllers
 
         private bool HasPassword()
         {
-            var user = UserManager.FindById(User.Identity.GetUserId<int>());
+            var user = AppUserManager.FindById(User.Identity.GetUserId<int>());
             if (user != null)
             {
                 return user.PasswordHash != null;
@@ -371,7 +371,7 @@ namespace TicketStore.Controllers
 
         private bool HasPhoneNumber()
         {
-            var user = UserManager.FindById(User.Identity.GetUserId<int>());
+            var user = AppUserManager.FindById(User.Identity.GetUserId<int>());
             if (user != null)
             {
                 return user.PhoneNumber != null;

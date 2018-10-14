@@ -7,6 +7,7 @@ namespace TicketStore.Core.Configurations
     {
         public DataContextConfiguration()
         {
+            
             this.SetProviderServices(SqlProviderServices.ProviderInvariantName, SqlProviderServices.Instance); //System.Data.Entity.Core.Common
         }
     }

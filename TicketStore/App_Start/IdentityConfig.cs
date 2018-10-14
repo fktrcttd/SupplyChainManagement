@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using Owin;
 using TicketStore.DataService;
 using TicketStore.Models;
 
@@ -33,9 +34,9 @@ namespace TicketStore
         }
     }
     
-    public class ApplicationRoleManager : RoleManager<ApplicationRole, int>
+    public class ApplicationRoleManager : RoleManager<AppRole, int>
     {
-        public ApplicationRoleManager(IRoleStore<ApplicationRole,int> roleStore)
+        public ApplicationRoleManager(IRoleStore<AppRole,int> roleStore)
             : base(roleStore) { }
 
         public static ApplicationRoleManager Create(
@@ -43,25 +44,25 @@ namespace TicketStore
             IOwinContext context)
         {
             var manager = new ApplicationRoleManager(
-                new ApplicationRoleStore(context.Get<ApplicationDataContext>()));
+                new ApplicationRoleStore(context.Get<AppDataContext>()));
             return manager;
         }
     }
     // Настройка диспетчера пользователей приложения. UserManager определяется в ASP.NET Identity и используется приложением.
-    public class ApplicationUserManager : UserManager<ApplicationUser, int>
+    public class AppUserManager : UserManager<AppUser, int>
     {
-        public ApplicationUserManager(IUserStore<ApplicationUser, int> store)
+        public AppUserManager(IUserStore<AppUser, int> store)
             : base(store)
         {
             
         }
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
+        public static AppUserManager Create(IdentityFactoryOptions<AppUserManager> options, IOwinContext context) 
         {
-            var manager =new ApplicationUserManager(
-                new ApplicatonUserStore(context.Get<ApplicationDataContext>())); 
+            var manager =new AppUserManager(
+                new ApplicatonUserStore(context.Get<AppDataContext>())); 
             // Настройка логики проверки имен пользователей
-            manager.UserValidator = new UserValidator<ApplicationUser, int>(manager) 
+            manager.UserValidator = new UserValidator<AppUser, int>(manager) 
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
@@ -69,12 +70,13 @@ namespace TicketStore
 
             // Настройка логики проверки паролей
             manager.PasswordValidator = new PasswordValidator
-            {
+            {/*
                 RequiredLength = 6,
                 RequireNonLetterOrDigit = true,
                 RequireDigit = true,
                 RequireLowercase = true,
                 RequireUppercase = true,
+*/
             };
 
             // Настройка параметров блокировки по умолчанию
@@ -84,11 +86,11 @@ namespace TicketStore
 
             // Регистрация поставщиков двухфакторной проверки подлинности. Для получения кода проверки пользователя в данном приложении используется телефон и сообщения электронной почты
             // Здесь можно указать собственный поставщик и подключить его.
-            manager.RegisterTwoFactorProvider("Код, полученный по телефону", new PhoneNumberTokenProvider<ApplicationUser, int> 
+            manager.RegisterTwoFactorProvider("Код, полученный по телефону", new PhoneNumberTokenProvider<AppUser, int> 
             {
                 MessageFormat = "Ваш код безопасности: {0}"
             });
-            manager.RegisterTwoFactorProvider("Код из сообщения", new EmailTokenProvider<ApplicationUser, int> 
+            manager.RegisterTwoFactorProvider("Код из сообщения", new EmailTokenProvider<AppUser, int> 
             {
                 Subject = "Код безопасности",
                 BodyFormat = "Ваш код безопасности: {0}"
@@ -99,28 +101,30 @@ namespace TicketStore
             if (dataProtectionProvider != null)
             {
                 manager.UserTokenProvider = 
-                    new DataProtectorTokenProvider<ApplicationUser, int>(dataProtectionProvider.Create("ASP.NET Identity"));
+                    new DataProtectorTokenProvider<AppUser, int>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
         }
     }
 
     // Настройка диспетчера входа для приложения.
-    public class ApplicationSignInManager : SignInManager<ApplicationUser, int>
+    public class ApplicationSignInManager : SignInManager<AppUser, int>
     {
-        public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)
-            : base(userManager, authenticationManager)
+        public ApplicationSignInManager(AppUserManager appUserManager, IAuthenticationManager authenticationManager)
+            : base(appUserManager, authenticationManager)
         {
         }
 
-        public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser applicationUser)
+        public override Task<ClaimsIdentity> CreateUserIdentityAsync(AppUser appUser)
         {
-            return applicationUser.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
+            return appUser.GenerateUserIdentityAsync((AppUserManager)UserManager);
         }
 
         public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
         {
-            return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
+            return new ApplicationSignInManager(context.GetUserManager<AppUserManager>(), context.Authentication);
         }
     }
+    
+    
 }

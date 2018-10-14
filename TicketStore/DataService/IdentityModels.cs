@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
@@ -19,19 +20,23 @@ namespace TicketStore.Models
     
     // В профиль пользователя можно добавить дополнительные данные, если указать больше свойств для класса ApplicationUser. Подробности см. на странице https://go.microsoft.com/fwlink/?LinkID=317594.
   
-    public class ApplicationUser : IdentityUser<int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>
+    public class AppUser : IdentityUser<int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>
     {
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser, int> manager)
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<AppUser, int> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
             return userIdentity;
         }
+        
+        [DisplayName("ФИО")]
+        public String Name { get; set; }
     }
 
     public class ApplicationUserRole : IdentityUserRole<int>
     {
+
     }
 
     public class ApplicationUserLogin : IdentityUserLogin<int>
@@ -42,23 +47,33 @@ namespace TicketStore.Models
     {
     }
 
-    public class ApplicationRole : IdentityRole<int, ApplicationUserRole>
+    public class AppRole : IdentityRole<int, ApplicationUserRole>
     {
+        public AppRole()
+        {
+            
+        }
+        public AppRole(string name) : this()
+        {
+            base.Name = name;
+        }
     }
 
     public class ApplicatonUserStore :
-        UserStore<ApplicationUser, ApplicationRole, int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>
+        UserStore<AppUser, AppRole, int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>
     {
-        public ApplicatonUserStore(ApplicationDataContext context)
+        public ApplicatonUserStore(AppDataContext context)
             : base(context)
         {
             
         }
+
+
     }
     
-    public class ApplicationRoleStore : RoleStore<ApplicationRole, int, ApplicationUserRole>
+    public class ApplicationRoleStore : RoleStore<AppRole, int, ApplicationUserRole>
     {
-        public ApplicationRoleStore(ApplicationDataContext context)
+        public ApplicationRoleStore(AppDataContext context)
             : base(context)
         {
             

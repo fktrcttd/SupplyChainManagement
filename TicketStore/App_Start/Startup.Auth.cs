@@ -16,9 +16,11 @@ namespace TicketStore
         // Дополнительные сведения о настройке аутентификации см. на странице https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
+            
+            
             // Настройка контекста базы данных, диспетчера пользователей и диспетчера входа для использования одного экземпляра на запрос
-            app.CreatePerOwinContext(ApplicationDataContext.Create);
-            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+            app.CreatePerOwinContext(AppDataContext.Create);
+            app.CreatePerOwinContext<AppUserManager>(AppUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 
             // Включение использования файла cookie, в котором приложение может хранить информацию для пользователя, выполнившего вход,
@@ -31,7 +33,7 @@ namespace TicketStore
                 Provider = new CookieAuthenticationProvider 
                 { 
                     OnValidateIdentity = SecurityStampValidator
-                        .OnValidateIdentity<ApplicationUserManager, ApplicationUser, int>( 
+                        .OnValidateIdentity<AppUserManager, AppUser, int>( 
                             validateInterval: TimeSpan.FromMinutes(30), 
                             regenerateIdentityCallback: (manager, user) => 
                                 user.GenerateUserIdentityAsync(manager), 
@@ -66,6 +68,8 @@ namespace TicketStore
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+            
+            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
         }
     }
 }

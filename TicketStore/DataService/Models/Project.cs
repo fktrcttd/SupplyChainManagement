@@ -14,5 +14,26 @@ namespace TicketStore.DataService.Models
     {
         [DisplayName("Созданные задачи")]
         public virtual ICollection<Task> Tasks { get; set; }
+        
+        
+        public override void Adding(AppDataContext context)
+        {
+           
+        }
+        
+        public override void Added(AppDataContext context)
+        {
+           
+        }
+
+        public override void Updating(AppDataContext context)
+        {
+            
+        }
+
+        public override void Updated(AppDataContext context)
+        {
+            
+        }
     }
 }

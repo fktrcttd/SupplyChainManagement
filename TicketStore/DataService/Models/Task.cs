@@ -29,22 +29,22 @@ namespace TicketStore.DataService.Models
         public TaskStatus TaskStatus { get; set; }
         
         
-        public override void Adding(ApplicationDataContext context)
+        public override void Adding(AppDataContext context)
         {
            
         }
         
-        public override void Added(ApplicationDataContext context)
+        public override void Added(AppDataContext context)
         {
            
         }
 
-        public override void Updating(ApplicationDataContext context)
+        public override void Updating(AppDataContext context)
         {
             
         }
 
-        public override void Updated(ApplicationDataContext context)
+        public override void Updated(AppDataContext context)
         {
             
         }

@@ -10,7 +10,7 @@ namespace TicketStore.Core
     {
         public void Process(object instance)
         {
-            var context = ApplicationDataContext.JoinOrOpen();
+            var context = AppDataContext.JoinOrOpen();
             var type = ObjectContext.GetObjectType(instance.GetType());
             var properties = type.GetProperties<DummyCondition>()
                 .Where(x => x.HasAttribute<CascadeDeleteAttribute>());
