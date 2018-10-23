@@ -204,10 +204,11 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Admin\AdminController.cs" />
+    <Compile Include="Controllers\Commons\AdminCommonController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Project\ProjectsController.cs" />
-    <Compile Include="Controllers\RoleAdminController.cs" />
+    <Compile Include="Controllers\Task\TaskController.cs" />
     <Compile Include="DataService\AppDataContext.cs" />
     <Compile Include="DataService\Attributes\CascadeDeleteAttribute.cs" />
     <Compile Include="DataService\Attributes\PropertyOrderAttribute.cs" />
@@ -268,17 +269,22 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\Partials\Create.cshtml" />
-    <Content Include="Views\Admin\Partials\Edit.cshtml" />
-    <Content Include="Views\Admin\Partials\UsersList.cshtml" />
+    <Content Include="Views\Admin\Roles\Create.cshtml" />
+    <Content Include="Views\Admin\Roles\Edit.cshtml" />
+    <Content Include="Views\Admin\Roles\Index.cshtml" />
+    <Content Include="Views\Admin\Users\Index.cshtml" />
+    <Content Include="Views\Admin\Users\Partials\Create.cshtml" />
+    <Content Include="Views\Admin\Users\Partials\Edit.cshtml" />
+    <Content Include="Views\Admin\Users\Partials\UsersList.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Projects\Create.cshtml" />
     <Content Include="Views\Projects\Index.cshtml" />
     <Content Include="Views\Projects\Partials\Edit.cshtml" />
     <Content Include="Views\Projects\Partials\ProjectsList.cshtml" />
-    <Content Include="Views\RoleAdmin\Create.cshtml" />
-    <Content Include="Views\RoleAdmin\Edit.cshtml" />
-    <Content Include="Views\RoleAdmin\Index.cshtml" />
+    <Content Include="Views\Shared\NavBars\AdminMenu.cshtml" />
+    <Content Include="Views\Shared\NavBars\EmpMenu.cshtml" />
+    <Content Include="Views\Shared\NavBars\ManagerMenu.cshtml" />
+    <Content Include="Views\Task\TasksList.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -305,17 +311,12 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\Task" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

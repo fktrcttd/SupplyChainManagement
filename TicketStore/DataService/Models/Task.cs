@@ -17,15 +17,11 @@ namespace TicketStore.DataService.Models
 
         [DataType("Reference")]
         public virtual Project Project { get; set; }
-
         
-        [DisplayName("Оценка")]
+        [DisplayName("Оценка в часах")]
         public TimeSpan EstimationTimeSpan { get; set; }
         
-        [DisplayName("Затрачено")]
-        public TimeSpan ElapsedTimeSpan { get; set; }
-        
-        [DisplayName("Затрачено")]
+        [DisplayName("Статус задачи")]
         public TaskStatus TaskStatus { get; set; }
         
         
