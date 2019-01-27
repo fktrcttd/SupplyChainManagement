@@ -1,0 +1,56 @@
+﻿@using SCM.DataService
+@using SCM.DataService.DataContext
+@using SCM.Models
+@using SCM.Models.IdentityModels
+@model PagedList.IPagedList<SCM.Models.IdentityModels.ScmUser>
+
+@{
+    
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Учетные записи
+    </div>
+    <table class="table table-striped">
+        <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>ФИО</th>
+            <th>Роль</th>
+            <th></th>
+        </tr>
+        @if (Model.Count() == 0) {
+            <tr>
+                <td colspan="4" class="text-center">Нет ни одной учетной записи</td>
+            </tr>
+        } else {
+            foreach (ScmUser user in Model) 
+            {
+                <tr>
+                    @{
+                        var roleId = user.Roles.FirstOrDefault()?.RoleId;
+                        ScmRole role = null;
+                        if (roleId != null)
+                        {
+                            var ctx = AppDataContext.JoinOrOpen();
+                            role = ctx.Roles.FirstOrDefault(r => r.Id == roleId);
+                        }
+                    }
+                    <td>@user.Id</td>
+                    <td>@user.Email</td>
+                    <td>@user.Name</td>
+                    <td>@(role?.Name ?? "Роль не определена")</td>
+                    <td></td>
+                    <td>
+                        @using (Html.BeginForm("DeleteUser", "Admin", new {id = user.Id}))
+                        {
+                            @Html.ActionLink("Изменить", "EditUser", new {id = user.Id},
+                                new {@class = "btn btn-primary btn-xs editDialog", style = "float: left; margin-right: 10px"})
+                            <button class="btn btn-danger btn-xs" type="submit">Удалить</button>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
