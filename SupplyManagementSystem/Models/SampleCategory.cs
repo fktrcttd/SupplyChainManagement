@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using SCM.Domain.Enums;
 
 namespace SCM.Models
 {
@@ -15,9 +16,12 @@ namespace SCM.Models
         public new string Title { set; get; }
         
         [DisplayName("Образцы")]
-        public virtual ICollection<Sample> Sample { get; set; }
+        public virtual ICollection<Sample> Samples { get; set; }
         
         [DisplayName("Базовые химические элементы")]
         public virtual ICollection<ChemicalElement> ChemicalElements { get; set; }
+
+        [DisplayName("Область применения образцов")]
+        public SampleCategoryType SampleCategoryType { get; set; }
     }
 }

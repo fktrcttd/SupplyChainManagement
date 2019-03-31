@@ -19,7 +19,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/kendo")  
+    @Scripts.Render("~/bundles/kendo")
     @RenderSection("scripts", required: false)
 </head>
 <body>
@@ -27,82 +27,93 @@
 <div style="display: none">
     @if (Request.IsAuthenticated)
     {
-        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm", @class = "navbar-right"}))
         {
             @Html.AntiForgeryToken()
         }
-    }    
+    }
 </div>
 
-    <div class="d-flex" id="wrapper">
-        <div class="bg-light border-right" id="sidebar-wrapper">
-            
-            <a href="@(Url.Action("Index", "Home"))">
-                <div class="sidebar-heading"> ИСО </div>    
-            </a>
-            
-            <div class="list-group list-group-flush">
-                @if (Request.IsAuthenticated)
-                {
-                    @Html.ActionLink("Клиенты", "Index", "Clients", new {area = ""}, new {@class = menuLinkclass})
-                    @Html.ActionLink("Заказы", "Index", "Orders", new {area = ""}, new {@class = menuLinkclass})
-                }
-                @if (User.IsInRole("admin"))
-                {
-                    @Html.ActionLink("Пользователи", "UsersList", "Admin", new { area = "" }, new { @class = menuLinkclass })
-                    @Html.ActionLink("Роли пользователей", "RoleList", "Admin", new { area = "" }, new { @class = menuLinkclass })
-                }
-                
-                @Html.ActionLink("Каталог", "Index", "Catalog", new {area = ""}, new {@class = menuLinkclass})
-            </div>
-        </div>
-        <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                <button class="btn btn-primary" id="menu-toggle">Меню</button>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Меню">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="@(Url.Action("Index", "Home"))">Домашняя страница<span class="sr-only">(current)</span></a>
-                        </li>
-                        
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Дополнительно
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                @if (Request.IsAuthenticated)
-                                {
-                                    <a class="dropdown-item" href="@(Url.Action("Index", "Manage"))">Настройки</a>
-                                }
-                                <div class="dropdown-divider"></div>
-                                
-                                <a class="dropdown-item" href="#">...</a>
-                            </div>
-                        </li>
-                        @if (Request.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Выйти</a>
-                            </li>    
-                        }
-                    </ul>
-                </div>
-            </nav>
+<div class="d-flex" id="wrapper">
+    <div class="bg-light border-right" id="sidebar-wrapper">
 
-            <div class="container body-content">
-                
-                @RenderBody()
-                <footer>
-                    <p>&copy; @DateTime.Now.Year – ИНСТИТУТ СТАНДАРТНЫХ ОБРАЗЦОВ</p>
-                </footer>
-            </div>
-        </div>
-        <!-- /#page-content-wrapper -->
+        <a href="@(Url.Action("Index", "Home"))">
+            <div class="sidebar-heading"> ИСО </div>
+        </a>
 
+        <div class="list-group list-group-flush">
+            @if (Request.IsAuthenticated)
+            {
+                @Html.ActionLink("Клиенты", "Index", "Clients", new {area = ""}, new {@class = menuLinkclass})
+                @Html.ActionLink("Заказы", "Index", "Orders", new {area = ""}, new {@class = menuLinkclass})
+            }
+            @if (User.IsInRole("admin"))
+            {
+                @Html.ActionLink("Пользователи", "UsersList", "Admin", new {area = ""}, new {@class = menuLinkclass})
+                @Html.ActionLink("Роли пользователей", "RoleList", "Admin", new {area = ""}, new {@class = menuLinkclass})
+            }
+
+            @Html.ActionLink("Каталог", "Index", "Catalog", new {area = ""}, new {@class = menuLinkclass})
+        </div>
     </div>
+    <div id="page-content-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <button class="btn btn-primary" id="menu-toggle">Меню</button>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Меню">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="@(Url.Action("Index", "Home"))">Домашняя страница<span class="sr-only">(current)</span></a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Дополнительно
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            @if (Request.IsAuthenticated)
+                            {
+                                <a class="dropdown-item" href="@(Url.Action("Index", "Manage"))">Настройки</a>
+                            }
+                            <div class="dropdown-divider"></div>
+
+                            <a class="dropdown-item" href="#">...</a>
+                        </div>
+                    </li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Выйти</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container body-content">
+
+            @RenderBody()
+
+        </div>
+        <!-- Footer -->
+        <footer class="page-footer font-small blue">
+
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3">© 2018 Copyright:
+                <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
+            </div>
+            <!-- Copyright -->
+
+        </footer>
+        <!-- Footer -->
+    </div>
+    <!-- /#page-content-wrapper -->
+    
+    
+</div>
+
 
 
 @*<div class="navbar navbar-default navbar-fixed-top" role="navigation">
