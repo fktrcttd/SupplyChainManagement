@@ -19,6 +19,7 @@ namespace SCM.Controllers
 
         public ManageController()
         {
+            
         }
 
         public ManageController(AppUserManager appUserManager, ApplicationSignInManager signInManager)
@@ -75,9 +76,6 @@ namespace SCM.Controllers
             };
             return View(model);
         }
-
-       
-       
         
         //
         // GET: /Manage/ChangePassword

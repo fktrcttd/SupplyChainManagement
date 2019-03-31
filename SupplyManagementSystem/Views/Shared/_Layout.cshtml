@@ -5,8 +5,6 @@
 
 @{
     var menuLinkclass = "list-group-item list-group-item-action bg-light";
-
-    var kendoRequired = (bool?)ViewBag.KendoRequired;
 }
 <!DOCTYPE html>
 <html>
@@ -17,16 +15,12 @@
     <title>@ViewBag.Title – Институт стандартных образцов</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/kendo/css")
-
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/kendo")  
     @RenderSection("scripts", required: false)
-    
-
-
 </head>
 <body>
 
@@ -36,7 +30,6 @@
         using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
         {
             @Html.AntiForgeryToken()
-                                       
         }
     }    
 </div>
@@ -99,7 +92,7 @@
                 </div>
             </nav>
 
-            <div class="container-fluid">
+            <div class="container body-content">
                 
                 @RenderBody()
                 <footer>
