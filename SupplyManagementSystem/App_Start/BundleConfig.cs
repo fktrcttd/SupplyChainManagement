@@ -19,7 +19,7 @@ namespace SCM
                 "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                "~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"));
+                "~/Scripts/bootstrap.min.js"));
             
             bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
                 "~/Scripts/kendo/kendo.all.min.js",
@@ -34,10 +34,11 @@ namespace SCM
             
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                "~/Content/Vendor/bootstrap/css/bootstrap.min.css",
+                "~/Content/bootstrap.min.css",
                 "~/Content/site.css",
                 "~/Content/simple-sidebar.css",
-                "~/Content/bootstrap-vertical-tabs.css"));
+                "~/Content/bootstrap-vertical-tabs.css"
+                ));
         }
     }
 }
