@@ -30,11 +30,6 @@ body {
 
 }
 
-#page-content-wrapper .container-fluid{
-  padding: 50px;
-
-}
-
 
 #wrapper.toggled #sidebar-wrapper {
   margin-left: 0;
