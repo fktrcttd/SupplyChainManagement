@@ -1,0 +1,75 @@
+﻿@using Kendo.Mvc.UI;
+@using SCM.ViewModels;
+@(Html.Kendo().Grid<ClientViewModel>()
+                            .Name("grid")
+                            .Columns(columns =>
+                            {
+                                columns.Bound(c => c.Name)
+                                  .Width(240);
+                                columns.Bound(c => c.FirstName);
+                                columns.Bound(c => c.ThirdName);
+                                columns.Bound(c => c.Address);
+                                columns.Bound(c => c.Phone);
+                            })
+                            .HtmlAttributes(new { style = "height: 350px;" })
+                            .Scrollable()
+                            .Groupable()
+                            .Sortable()
+                            .Pageable(pageable => pageable
+                                .Refresh(true)
+                                .PageSizes(true)
+                                .ButtonCount(5))
+                            .DataSource(dataSource => dataSource
+                                .Ajax()
+                                .Read(read => read.Action("ClientsRead", "Clients"))
+                                .PageSize(20)
+                            ))
+
+
+@*@model IEnumerable<SCM.Models.Client>
+
+    @{
+        ViewBag.Title = "Index";
+    }
+
+    <h2>Клиенты ИСО</h2>
+
+    <p>
+        @Html.ActionLink("Добавить нового киента", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+
+            <td>
+                @Html.ActionLink("Изменить", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Подробнее", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Удалить", "Delete", new { id=item.Id })
+            </td>
+        </tr>
+    }
+
+    </table>*@

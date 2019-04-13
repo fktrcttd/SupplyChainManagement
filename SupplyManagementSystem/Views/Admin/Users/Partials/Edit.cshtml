@@ -1,0 +1,91 @@
+﻿@using SCM.DataService
+@using SCM.DataService.DataContext
+@model SCM.ViewModels.UpdateModel
+@{ 
+    ViewBag.Title = "Редактирование пользователя"; 
+    var ctx = new AppDataContext();
+    var roles = ctx.Roles.ToList();
+    var sList = new List<SelectListItem>();
+    int? roleId = Model.RoleId;
+    foreach (var appRole in roles)
+    {
+        sList.Add(new SelectListItem()
+        {
+            Value = appRole.Id.ToString(),
+            Text = appRole.Name,
+            Selected = appRole.Id == roleId
+        });
+    }
+}
+
+
+
+
+@*<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+
+
+
+@using (Ajax.BeginForm("EditUser", "Admin", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "users_list", OnSuccess = "$('.close').click()" }))
+{
+    @Html.HiddenFor(m => m.Id)
+    <div class="modal-body">
+        <div class="row form-group">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Введите ваш E-mail", required="required", type="email"})
+                </div>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "ФИО", required="required" })
+                </div>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                    @Html.DropDownListFor(m => m.RoleId, sList , new { @class = "form-control"})
+                </div>
+            </div>
+        </div>
+        
+        <div class="row form-group">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Пароль" })
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Закрыть</button>
+        <button type="submit" class="btn btn-primary" name="cmd"><i class="fa fa-check"></i>&nbsp;Сохранить изменения</button>
+    </div>
+}
