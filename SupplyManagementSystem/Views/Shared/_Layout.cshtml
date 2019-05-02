@@ -13,6 +13,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title – Институт стандартных образцов</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/kendo/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -21,6 +22,10 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/kendo")
     @RenderSection("scripts", required: false)
+    <script src="@Url.Content("~/Scripts/Kendo/cultures/kendo.culture.ru-RU.min.js")"></script>
+    <script>
+        kendo.culture("ru-RU");
+    </script>
 </head>
 <body>
 

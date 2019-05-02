@@ -6,125 +6,124 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Kendo.Mvc.Extensions;
-using Kendo.Mvc.UI;
 using SCM.DataService.DataContext;
 using SCM.Models;
 
 namespace SCM.Controllers
 {
-    public class ClientsController : Controller
+    public class ReleasesController : Controller
     {
         private AppDataContext db = new AppDataContext();
 
-        // GET: Clients
+        // GET: Releases
         public ActionResult Index()
         {
-            return View(db.Clients.ToList());
+            var releases = db.Releases.Include(r => r.Sample).Include(r => r.Worker);
+            return View(releases.ToList());
         }
 
-        // GET: Clients/Details/5
+        // GET: Releases/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Client client = db.Clients.Find(id);
-            if (client == null)
+            Release release = db.Releases.Find(id);
+            if (release == null)
             {
                 return HttpNotFound();
             }
-            return View(client);
+            return View(release);
         }
 
-        // GET: Clients/Create
+        // GET: Releases/Create
         public ActionResult Create()
         {
+            ViewBag.SampleId = new SelectList(db.Samples, "Id", "Title");
+            ViewBag.WorkerId = new SelectList(db.Workers, "Id", "Name");
             return View();
         }
 
-        // POST: Clients/Create
+        // POST: Releases/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Address,Phone,DeleteForbidden,EditForbidden,Title,IsPublish,LastModifed")] Client client)
+        public ActionResult Create([Bind(Include = "Id,SampleId,WorkerId,Date,Quantity,DeleteForbidden,EditForbidden,Title,IsPublish,LastModifed")] Release release)
         {
             if (ModelState.IsValid)
             {
-                db.Clients.Add(client);
+                db.Releases.Add(release);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(client);
+            ViewBag.SampleId = new SelectList(db.Samples, "Id", "Title", release.SampleId);
+            ViewBag.WorkerId = new SelectList(db.Workers, "Id", "Name", release.WorkerId);
+            return View(release);
         }
 
-        // GET: Clients/Edit/5
+        // GET: Releases/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Client client = db.Clients.Find(id);
-            if (client == null)
+            Release release = db.Releases.Find(id);
+            if (release == null)
             {
                 return HttpNotFound();
             }
-            return View(client);
+            ViewBag.SampleId = new SelectList(db.Samples, "Id", "Title", release.SampleId);
+            ViewBag.WorkerId = new SelectList(db.Workers, "Id", "Name", release.WorkerId);
+            return View(release);
         }
 
-        // POST: Clients/Edit/5
+        // POST: Releases/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Address,Phone,DeleteForbidden,EditForbidden,Title,IsPublish,LastModifed")] Client client)
+        public ActionResult Edit([Bind(Include = "Id,SampleId,WorkerId,Date,Quantity,DeleteForbidden,EditForbidden,Title,IsPublish,LastModifed")] Release release)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(client).State = EntityState.Modified;
+                db.Entry(release).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(client);
+            ViewBag.SampleId = new SelectList(db.Samples, "Id", "Title", release.SampleId);
+            ViewBag.WorkerId = new SelectList(db.Workers, "Id", "Name", release.WorkerId);
+            return View(release);
         }
 
-        // GET: Clients/Delete/5
+        // GET: Releases/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Client client = db.Clients.Find(id);
-            if (client == null)
+            Release release = db.Releases.Find(id);
+            if (release == null)
             {
                 return HttpNotFound();
             }
-            return View(client);
+            return View(release);
         }
 
-        // POST: Clients/Delete/5
+        // POST: Releases/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Client client = db.Clients.Find(id);
-            db.Clients.Remove(client);
+            Release release = db.Releases.Find(id);
+            db.Releases.Remove(release);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        public ActionResult ClientsRead([DataSourceRequest]DataSourceRequest request)
-        {
-            
-            var context = new AppDataContext();
-            var users = context.Clients.ToList();
-            return Json(users.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
-        }
-
 
         protected override void Dispose(bool disposing)
         {
@@ -134,6 +133,5 @@ namespace SCM.Controllers
             }
             base.Dispose(disposing);
         }
-        
     }
 }
