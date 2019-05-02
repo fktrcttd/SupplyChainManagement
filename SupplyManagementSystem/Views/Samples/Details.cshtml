@@ -1,0 +1,90 @@
+﻿@model SCM.Models.Sample
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Sample</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ColorificValue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ColorificValue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Weight)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Weight)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeleteForbidden)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeleteForbidden)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EditForbidden)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EditForbidden)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsPublish)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsPublish)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastModifed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastModifed)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
