@@ -9,15 +9,27 @@ namespace SCM.Models
 {
     public class Client : Entity
     {
+        /// <summary>
+        /// Фамилия клиента
+        /// </summary>
         [DisplayName("Фамилия")]
         public string Name { set; get; }
 
+        /// <summary>
+        /// Имя клиента
+        /// </summary>
         [DisplayName("Имя")]
         public string FirstName { set; get; }
 
+        /// <summary>
+        /// Отчество клиента
+        /// </summary>
         [DisplayName("Отчество")]
         public string ThirdName { set; get; }
 
+        /// <summary>
+        /// Адрес электронной почты
+        /// </summary>
         [DisplayName("Адрес")]
         public string Address { set; get; }
 

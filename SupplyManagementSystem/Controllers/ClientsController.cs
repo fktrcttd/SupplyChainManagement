@@ -6,6 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 using SCM.DataService.DataContext;
 using SCM.Models;
 
@@ -115,6 +117,14 @@ namespace SCM.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult ClientsRead([DataSourceRequest]DataSourceRequest request)
+        {
+            
+            var context = new AppDataContext();
+            var users = context.Clients.ToList();
+            return Json(users.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+        }
+
 
         protected override void Dispose(bool disposing)
         {
@@ -124,5 +134,6 @@ namespace SCM.Controllers
             }
             base.Dispose(disposing);
         }
+        
     }
 }
