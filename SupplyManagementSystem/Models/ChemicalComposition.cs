@@ -15,12 +15,7 @@ namespace SCM.Models
     /// </summary>
     public class ChemicalComposition : Entity
     {
-        /// <summary>
-        /// Наименование химического состава
-        /// </summary>
-        [DisplayName("Химический состав")]
-        public new string Title { set; get; }
-
+    
         /// <summary>
         /// Связки химических элементов и составов, в которых участвует данный элемент
         /// </summary>
@@ -33,14 +28,20 @@ namespace SCM.Models
         public int SampleCategoryId { set; get; }
         
         /// <summary>
+        /// Наименование химического состава. Например, "сталь углеродистая". 
+        /// </summary>
+        [DisplayName("Химический состав")]
+        public new string Title { set; get; }
+        
+        /// <summary>
+        /// Индекс химического состава. Например, "С1в". 
+        /// </summary>
+        [DisplayName("Индекс")]
+        public string Index { set; get; }
+        
+        /// <summary>
         /// Объект категории образцов, к которой привязан данный химический состав
         /// </summary>
         public virtual SampleCategory SampleCategory { set; get; }
-        
-        /// <summary>
-        /// Наличие элементов с таким химическим составом на складе
-        /// </summary>
-        [Display(Name = "Наличие")]
-        public int Amount { get; set; }
     }
 }

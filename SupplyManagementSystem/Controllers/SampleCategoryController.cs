@@ -49,7 +49,7 @@ namespace SCM.Controllers
             var context = new AppDataContext();
 
             var accessableChemicalElements = context.ChemicalElements.Select(element => new SelectListItem()
-                {Text = element.Symbol +"-" +element.Title, Value = element.Id.ToString()});
+                {Text = element.Symbol +"-" +element.Title, Value = element.Id.ToString()}).OrderBy(option => option.Text);
             var chemicalElementsMultiSelect = new MultiSelectList(accessableChemicalElements, "Value", "Text");
             ViewBag.ChemicalElementsMultiSelect = chemicalElementsMultiSelect;
         }

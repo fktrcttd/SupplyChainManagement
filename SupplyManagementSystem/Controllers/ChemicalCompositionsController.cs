@@ -29,7 +29,27 @@ namespace SCM.Controllers
                 }
                 db.SaveChanges();
             }
-            
+
+            if (!db.ChemicalCompositions.Any())
+            {
+                var newChemicalComposition = new ChemicalComposition();
+                newChemicalComposition.Title = "тестовый состав";
+                newChemicalComposition.Index = "тс1";
+                newChemicalComposition.SampleCategoryId = 4;
+                db.ChemicalCompositions.Add(newChemicalComposition);
+                db.SaveChanges();
+
+                newChemicalComposition.CompositionsElements = db.ChemicalElements
+                    .Where(e => e.Id < 20).ToList()
+                    .Select(e => new CompositionsElement()
+                    {
+                        Percentage = 2,
+                        ChemicalElementId = e.Id, 
+                        ChemicalCompositionId = newChemicalComposition.Id
+                    })
+                    .ToList();
+                db.SaveChanges();    
+            }
             
             return View(db.ChemicalCompositions.ToList());
         }

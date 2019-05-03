@@ -28,5 +28,7 @@ namespace SCM.Models
         /// </summary>
         [Display(Name = "Количество образца на складе")]
         public int Amount { get; set; }
+        
+        
     }
 }

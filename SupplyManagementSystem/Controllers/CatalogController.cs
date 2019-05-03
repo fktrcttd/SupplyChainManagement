@@ -20,5 +20,13 @@ namespace SCM.Controllers
             vm.SampleCategories = categories;
             return View(vm);
         }
+
+
+        public ActionResult Category(int id)
+        {
+            var category = _context.SampleCategories.FirstOrDefault();
+            var compositions = _context.ChemicalCompositions.Where(c => c.SampleCategoryId == category.Id).ToList();
+            return View(compositions);
+        }
     }
 }

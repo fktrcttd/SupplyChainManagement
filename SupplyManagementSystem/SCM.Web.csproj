@@ -1137,6 +1137,7 @@
     <Content Include="Views\Admin\Users\Partials\Create.cshtml" />
     <Content Include="Views\Admin\Users\Partials\Edit.cshtml" />
     <Content Include="Views\Admin\Users\Partials\UsersList.cshtml" />
+    <Content Include="Views\Catalog\Category.cshtml" />
     <Content Include="Views\Catalog\Index.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\SampleCategory\Create.cshtml" />

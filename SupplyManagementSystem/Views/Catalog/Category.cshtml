@@ -1,0 +1,21 @@
+@model IEnumerable<SCM.Models.ChemicalComposition>
+@{
+                                                  
+}
+<table class="table">
+    <tbody>
+    @foreach (var composition in Model)
+    {
+        <tr>
+            <td>
+                <div class="row">@composition.Title</div>
+                <div class="row">@composition.Index</div>
+                <div class="row">50 ã.</div>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+    }
+    
+    </tbody>
+</table>
