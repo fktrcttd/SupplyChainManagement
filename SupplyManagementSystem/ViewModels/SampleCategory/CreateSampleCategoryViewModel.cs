@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Web;
 
 namespace SCM.ViewModels.SampleCategory
 {
@@ -16,6 +17,12 @@ namespace SCM.ViewModels.SampleCategory
         /// </summary>
         [DisplayName("Перечень базовых химических элементов")]
         public int[] BaseChemicalElementId { get; set; }
+        
+        //To change label title value  
+        [DisplayName("Upload File")]  
+        public string ImagePath { get; set; }  
+  
+        public HttpPostedFileBase ImageFile { get; set; } 
 
     }
 }

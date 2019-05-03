@@ -1,9 +1,13 @@
+using System.Collections.Generic;
 using System.Configuration;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Kaliko.ImageLibrary;
 using SCM.DataService.DataContext;
+using SCM.Models;
 using SCM.ViewModels.SampleCategory;
 
 namespace SCM.Controllers
@@ -20,13 +24,24 @@ namespace SCM.Controllers
         [HttpPost]
         public ActionResult Create(CreateSampleCategoryViewModel model)
         {
-            var image = Request.Files[0] as HttpPostedFileBase;
-            string uploadPath = Server.MapPath("~/Content/SampleCategoryImages");
+            var context = new AppDataContext();
+            var elements = model.BaseChemicalElementId != null && model.BaseChemicalElementId.Any()
+                ? context.ChemicalElements.Where(e => model.BaseChemicalElementId.Contains(e.Id)).ToList() : new List<ChemicalElement>();
+            var category = new SampleCategory();
+            category.Title = model.Title;
+            category.ChemicalElements = elements;
+            var image = model.ImageFile;
+            string uploadPath = Server.MapPath("~/Content/Images/SampleCategoryImages");
             string newFileOne = Path.Combine(uploadPath, image.FileName);  
-  
-            image.SaveAs(newFileOne);  
-  
-            return View(model);
+            image.SaveAs(newFileOne);
+            
+            var processingImage = new KalikoImage(Path.Combine(uploadPath, image.FileName));
+            processingImage.Resize(600, 400);
+            processingImage.SaveImage(Path.Combine(uploadPath, category.Title+".jpeg"), ImageFormat.Jpeg);
+            category.ImageName = category.Title + ".jpeg";
+            context.Add(category);
+            context.Commit();
+            return View(new CreateSampleCategoryViewModel());
         }
 
         private void ResolveViewBag()

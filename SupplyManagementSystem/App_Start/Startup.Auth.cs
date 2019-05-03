@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -20,7 +21,9 @@ namespace SCM
         public void ConfigureAuth(IAppBuilder app)
         {
             
-            
+            var cultureInfo = new CultureInfo("ru-RU");
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
             // Настройка контекста базы данных, диспетчера пользователей и диспетчера входа для использования одного экземпляра на запрос
             app.CreatePerOwinContext(AppDataContext.Create);
             app.CreatePerOwinContext<AppUserManager>(AppUserManager.Create);

@@ -26,9 +26,10 @@ namespace SCM
                 "~/Scripts/kendo/kendo.all.min.js",
                 // uncomment below if using the Scheduler
                 // "~/Scripts/kendo/kendo.timezones.min.js",
-                "~/Scripts/kendo/kendo.aspnetmvc.min.js"));
+                "~/Scripts/kendo/kendo.aspnetmvc.min.js",
+                "~/Scripts/Kendo/cultures/kendo.culture.ru-RU.min.js",
+                "~/Scripts/Kendo/messages/kendo.messages.ru-RU.min.js"));
 
-            
             bundles.Add(new StyleBundle("~/Content/kendo/css").Include(
                 /*"~/Content/kendo/kendo.common-bootstrap.min.css",*/
                 "~/Content/kendo/kendo.bootstrap-v4.min.css"));

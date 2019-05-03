@@ -8,7 +8,7 @@ using SCM.Models.IdentityModels;
 
 namespace SCM.DataService.DataContext
 {
-    public class IdentityDbInit : DropCreateDatabaseAlways<AppDataContext>
+    public class IdentityDbInit : CreateDatabaseIfNotExists<AppDataContext>
     {
         protected override void Seed(AppDataContext context)
         {
@@ -42,23 +42,23 @@ namespace SCM.DataService.DataContext
 
         public void InitSampleCategories(AppDataContext context)
         {
-            if (context.SampleCategories.Any())
-                return;
-            var steel = new SampleCategory();
-            steel.Title = "Стали";
-            steel.SampleCategoryType = SampleCategoryType.ChemicalAnalysis;
-            
-            var castIron = new SampleCategory();
-            castIron.Title = "Чугуны";
-            castIron.SampleCategoryType = SampleCategoryType.ChemicalAnalysis;
-            
-            var nicelBased = new SampleCategory();
-            nicelBased.Title = "Сплавы на никелевой основе";
-            nicelBased.SampleCategoryType = SampleCategoryType.ChemicalAnalysis;
-            context.SampleCategories.Add(steel);
-            context.SampleCategories.Add(nicelBased);
-            context.SampleCategories.Add(castIron);
-            context.SaveChanges();
+//            if (context.SampleCategories.Any())
+//                return;
+//            var steel = new SampleCategory();
+//            steel.Title = "Стали";
+//            steel.SampleCategoryType = SampleCategoryType.ChemicalAnalysis;
+//            
+//            var castIron = new SampleCategory();
+//            castIron.Title = "Чугуны";
+//            castIron.SampleCategoryType = SampleCategoryType.ChemicalAnalysis;
+//            
+//            var nicelBased = new SampleCategory();
+//            nicelBased.Title = "Сплавы на никелевой основе";
+//            nicelBased.SampleCategoryType = SampleCategoryType.ChemicalAnalysis;
+//            context.SampleCategories.Add(steel);
+//            context.SampleCategories.Add(nicelBased);
+//            context.SampleCategories.Add(castIron);
+//            context.SaveChanges();
         }
     }
 }

@@ -3,11 +3,11 @@
 @model SCM.ViewModels.CatalogViewModel
 
 @{
-    ViewBag.Title = "РљР°С‚Р°Р»РѕРі";
-  var grouped = LinqExtension.Split(Model.SampleCategories, 3);
+    ViewBag.Title = "Каталог";
+  var grouped = Model.SampleCategories.Split(3);
 }
 
-<h2>РљР°С‚Р°Р»РѕРі</h2>
+<h2>Каталог</h2>
 
 @foreach (var group in grouped)
 {
@@ -15,13 +15,10 @@
   
   @foreach (var  categoy in group)
   {
-    <!-- Card -->
     <div class="card mb-4">
-
-      <!--Card image-->
       <div class="view overlay">
-        <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg" alt="Card image cap">
-        <a href="#!">
+        <img class="card-img-top" src="@($"/Content/Images/SampleCategoryImages/{categoy.ImageName}")" alt="Card image cap">
+        <a href="#">
           <div class="mask rgba-white-slight"></div>
         </a>
       </div>
@@ -29,7 +26,7 @@
         <h4 class="card-title">@categoy.Title</h4>
       </div>
       <div class="card-footer">
-        РћР±СЂР°Р·С†С‹
+        Образцы
       </div>
     </div>
     <!-- Card -->

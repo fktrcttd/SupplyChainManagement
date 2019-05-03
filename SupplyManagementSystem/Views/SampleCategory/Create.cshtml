@@ -7,7 +7,10 @@
 
 <h2>Создание новой категории образцов</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "SampleCategory", FormMethod.Post,new  
+{  
+    enctype = "multipart/form-data"  
+})) 
 {
     @Html.AntiForgeryToken()
     
@@ -21,16 +24,13 @@
             </div>
         </div>
         
-        
-                <div class="form-group">
-                    @Html.LabelForModel("Картинка категории", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                                    <div>  
-                                        <input type="file" class="sample_category_image" name="sample_category_image" accept=".jpg,.jpeg,.png"/>  
-                                    </div>  
-                    </div>
+         <div class="form-group">  
+                    @Html.LabelFor(model => model.ImagePath, htmlAttributes: new { @class = "control-label col-md-2" })  
+                    <div class="col-md-10">  
+                        <input type="file" name="ImageFile" required accept=".jpg,.jpeg, .png "/>  
+                    </div>  
                 </div>
-
+        
         <div class="form-group">
             @Html.LabelFor(model => model.BaseChemicalElementId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -40,35 +40,35 @@
         
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Добавить" class="btn btn-default submit" />
+                <input type="submit" value="Добавить" class="btn btn-default submit" />
             </div>
         </div>
         
     </div>
 }
 
-<script>
-
-$(document).ready(function () {  
-    $('.submit').click(function () {  
-        var files = new FormData();  
-        var file = $(".sample_category_image")[0].files[0];  
-        files.append('files[0]', file);  
-        $.ajax({  
-            type: 'POST',  
-            url: "Create",  
-            data: files,  
-            dataType: 'json',  
-            cache: false,  
-            contentType: false,  
-            processData: false,  
-            success: function (response) {  
-                alert("success");  
-            },  
-            error: function (error) {  
-                console.log(error);
-            }  
-        });  
-    });  
-});  
-</script>
+@* <script> *@
+@* *@
+@* $(document).ready(function () {   *@
+@*     $('.submit').click(function () {   *@
+@*         var files = new FormData();   *@
+@*         var file = $(".sample_category_image")[0].files[0];   *@
+@*         files.append('files[0]', file);   *@
+@*         $.ajax({   *@
+@*             type: 'POST',   *@
+@*             url: "Create",   *@
+@*             data: files,   *@
+@*             dataType: 'json',   *@
+@*             cache: false,   *@
+@*             contentType: false,   *@
+@*             processData: false,   *@
+@*             success: function (response) {   *@
+@*                 alert("success");   *@
+@*             },   *@
+@*             error: function (error) {   *@
+@*                 console.log(error); *@
+@*             }   *@
+@*         });   *@
+@*     });   *@
+@* });   *@
+@* </script> *@

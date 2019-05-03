@@ -5,14 +5,15 @@
 @{
     ViewBag.Title = "Index";
 }
-
+@*Скрипт для генерации Экселя*@
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
 <h2>Клиенты ИСО</h2>
 
 @*Грид*@
 
 
 <div class="text-right p-3">
-    <a href='@Url.Action("Create")' id="Add" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>&nbsp;Добавить клиента</a>
+    <a href='@Url.Action("Create")' class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>&nbsp;Добавить клиента</a>
 </div>
 
 <div class="container-fluid">
@@ -29,7 +30,7 @@
                   columns.Bound(p => p.Id).Title("Действия").ClientTemplate("<a href='" + @Url.Action("Edit", "Clients", new {id = "#=Id#"}) + "' class='btn btn-xs'>  <i class='fas fa-pen'></i></a>" + "<a href='" + @Url.Action("Delete", "Clients", new {id = "#=Id#"}) + "' class='btn btn-xs m-1'>  <i class='fas fa-trash'></i></a> ");
               })
               .Pageable()
-              .ToolBar(tools => tools.Excel())
+              .ToolBar(tools => tools.Excel().Text("Экспортировать в Эксель"))
               .Groupable()
               .Sortable()
               .Scrollable(s => s.Enabled(true))
