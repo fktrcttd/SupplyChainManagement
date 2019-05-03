@@ -119,13 +119,10 @@ namespace SCM.Controllers
         }
         public ActionResult ClientsRead([DataSourceRequest]DataSourceRequest request)
         {
-            
             var context = new AppDataContext();
             var users = context.Clients.ToList();
             return Json(users.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
         }
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
