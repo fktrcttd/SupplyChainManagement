@@ -266,6 +266,8 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\CatalogViewModel.cs" />
+    <Compile Include="ViewModels\ChemicalComposion\ChemicalElementViewModel.cs" />
+    <Compile Include="ViewModels\ChemicalComposion\ChemicalCompositionViewModel.cs" />
     <Compile Include="ViewModels\ClientViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="ViewModels\SampleCategory\CreateSampleCategoryViewModel.cs" />
@@ -1138,6 +1140,7 @@
     <Content Include="Views\Admin\Users\Partials\Edit.cshtml" />
     <Content Include="Views\Admin\Users\Partials\UsersList.cshtml" />
     <Content Include="Views\Catalog\Category.cshtml" />
+    <Content Include="Views\Catalog\CreateChemicalComposition.cshtml" />
     <Content Include="Views\Catalog\Index.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\SampleCategory\Create.cshtml" />

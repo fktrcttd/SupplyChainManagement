@@ -1,7 +1,17 @@
 @model IEnumerable<SCM.Models.ChemicalComposition>
 @{
-                                                  
+
+    var categoryId = ViewBag.CategoryId;     
 }
+
+
+
+<h1>
+    Категория
+</h1>
+
+
+<a class="btn btn-default" href="@Url.Action("Create","ChemicalCompositions", new {categoryId = categoryId})">Добавить химический состав</a>
 <table class="table">
     <tbody>
     @foreach (var composition in Model)

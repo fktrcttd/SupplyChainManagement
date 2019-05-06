@@ -18,21 +18,10 @@ namespace SCM.Core
 
         public int Id { get; set; }
 
-        [DisplayName("Запрещено удалять")]
-        public bool DeleteForbidden { get; set; }
-
-        [DisplayName("Запрещено редактировать")]
-        public bool EditForbidden { get; set; }
-
         [DisplayName("Название")]
         [DefaultValue("")]
         public string Title { get; set; }
 
-
-        [DisplayName("Публиковать")]
-        public bool IsPublish { get; set; }
-
-        public DateTime? LastModifed { get; set; }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public virtual string TypeName
@@ -50,7 +39,6 @@ namespace SCM.Core
 
         public virtual void Adding(AppDataContext context)
         {
-            LastModifed = DateTime.Now;
         }
 
         public virtual void Deleting(AppDataContext context)
@@ -65,7 +53,6 @@ namespace SCM.Core
 
         public virtual void Updating(AppDataContext context)
         {
-            LastModifed = DateTime.Now;
         }
 
         public virtual void Updated(AppDataContext context)

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using SCM.DataService.DataContext;
 using SCM.Models;
+using SCM.ViewModels.ChemicalComposion;
 
 namespace SCM.Controllers
 {
@@ -21,7 +22,7 @@ namespace SCM.Controllers
             if(db.ChemicalElements.Count() < 4)
             {
                 var elements = ParseJsonHelper.GetChemicalElements()
-                .Select(el => new ChemicalElement { Title = el.name, Symbol = el.symbol, IsPublish = true });
+                .Select(el => new ChemicalElement { Title = el.name, Symbol = el.symbol});
 
                 foreach (var el in elements)
                 {
@@ -70,8 +71,10 @@ namespace SCM.Controllers
         }
 
         // GET: ChemicalCompositions/Create
-        public ActionResult Create()
+        public ActionResult Create(int? categoryId)
         {
+            var category = AppDataContext.JoinOrOpen().SampleCategories.FirstOrDefault(sampleCategory => sampleCategory.Id == categoryId);
+            ViewBag.Category = category;
             return View();
         }
 
@@ -80,16 +83,37 @@ namespace SCM.Controllers
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,DeleteForbidden,EditForbidden,IsPublish,LastModifed")] ChemicalComposition chemicalComposition)
+        public ActionResult Create( ChemicalCompositionViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.ChemicalCompositions.Add(chemicalComposition);
+                var newOne = new ChemicalComposition();
+                newOne.Title = model.Name;
+                db.Add(newOne);
+                db.SaveChanges();
+                var newElements =  model.Elements
+                    .Select(e =>
+                    {
+                        var dbElement = db.ChemicalElements.FirstOrDefault(el => el.Symbol.ToLower() == e.Name.ToLower());
+                        return new CompositionsElement()
+                        {
+                            Percentage = e.Percentage,
+                            ChemicalElementId = dbElement.Id,
+                            ChemicalElement = dbElement,
+                            ChemicalComposition = newOne
+                        };
+                    });
+
+                foreach (var chemicalElement in newElements)
+                {
+                    newOne.CompositionsElements.Add(chemicalElement);
+                }
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(chemicalComposition);
+            return View(model);
         }
 
         // GET: ChemicalCompositions/Edit/5

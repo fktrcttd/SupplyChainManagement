@@ -15,7 +15,7 @@ namespace SCM.Controllers
         // GET
         public ActionResult Index()
         {
-            var categories = _context.SampleCategories.AsEnumerable();
+            var categories = _context.SampleCategories.ToList();
             var vm = new CatalogViewModel();
             vm.SampleCategories = categories;
             return View(vm);
@@ -24,9 +24,13 @@ namespace SCM.Controllers
 
         public ActionResult Category(int id)
         {
-            var category = _context.SampleCategories.FirstOrDefault();
+            var category = _context.SampleCategories.FirstOrDefault(sampleCategory => sampleCategory.Id == id);
             var compositions = _context.ChemicalCompositions.Where(c => c.SampleCategoryId == category.Id).ToList();
+
+            ViewBag.CategoryId = id;
             return View(compositions);
         }
+
+        
     }
 }

@@ -17,7 +17,7 @@
     <div class="card mb-4">
       <div class="view overlay">
         <img class="card-img-top" src="@($"/Content/Images/SampleCategoryImages/{categoy.ImageName}")" alt="Card image cap">
-        <a href="">
+        <a href="@Url.Action("Category", new {id = categoy.Id})">
           <div class="mask rgba-white-slight h3">@categoy.Title</div>
         </a>
       </div>

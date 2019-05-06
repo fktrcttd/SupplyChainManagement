@@ -31,6 +31,6 @@ namespace SCM.Models
         /// Процент содержания химического элемента
         /// </summary>
         [Range(0,100, ErrorMessage = "Процент должен быть числом от 0 до 100")]
-        public int Percentage { get; set; }
+        public decimal Percentage { get; set; }
     }
 }

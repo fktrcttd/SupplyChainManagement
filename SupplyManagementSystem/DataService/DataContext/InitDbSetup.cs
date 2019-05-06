@@ -37,6 +37,7 @@ namespace SCM.DataService.DataContext
                 userManager.AddToRole(admin.Id, adminRole.Name);
 
             InitSampleCategories(context);
+            InitElements(db:context);
         }
 
 
@@ -59,6 +60,42 @@ namespace SCM.DataService.DataContext
 //            context.SampleCategories.Add(nicelBased);
 //            context.SampleCategories.Add(castIron);
 //            context.SaveChanges();
+        }
+
+        private void InitElements(AppDataContext db)
+        {
+            if(db.ChemicalElements.Count() < 4)
+            {
+                var elements = ParseJsonHelper.GetChemicalElements()
+                    .Select(el => new ChemicalElement { Title = el.name, Symbol = el.symbol});
+
+                foreach (var el in elements)
+                {
+                    db.ChemicalElements.Add(el);
+                }
+                db.SaveChanges();
+            }
+
+//            if (!db.ChemicalCompositions.Any())
+//            {
+//                var newChemicalComposition = new ChemicalComposition();
+//                newChemicalComposition.Title = "тестовый состав";
+//                newChemicalComposition.Index = "тс1";
+//                newChemicalComposition.SampleCategoryId = 4;
+//                db.ChemicalCompositions.Add(newChemicalComposition);
+//                db.SaveChanges();
+//
+//                newChemicalComposition.CompositionsElements = db.ChemicalElements
+//                    .Where(e => e.Id < 20).ToList()
+//                    .Select(e => new CompositionsElement()
+//                    {
+//                        Percentage = 2,
+//                        ChemicalElementId = e.Id, 
+//                        ChemicalCompositionId = newChemicalComposition.Id
+//                    })
+//                    .ToList();
+//                db.SaveChanges();    
+//            }
         }
     }
 }
