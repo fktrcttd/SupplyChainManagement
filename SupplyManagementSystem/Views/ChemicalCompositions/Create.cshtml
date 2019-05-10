@@ -1,55 +1,74 @@
 ﻿@using SCM.Models
+@using SCM.ViewModels.ChemicalComposion
 @model SCM.ViewModels.ChemicalComposion.ChemicalCompositionViewModel
 
 @{
     var category = ViewBag.Category as SampleCategory;
+    var baseElements = category.ChemicalElements.Select(s => new ChemicalElementViewModel() {Id = s.Id, Name = s.Symbol, Percentage = 0});
     ViewBag.Title = "Создать новый химический состав";
 }
 
-<h2>Создать</h2>
+<h2>Химический состав</h2>
 
-@using (Html.BeginForm("Create", "ChemicalCompositions", FormMethod.Post, new {id = "create_chemical_composition_form"})) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>ChemicalComposition</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        
-        @foreach (var baseElement in category.ChemicalElements)
-        {
-            <div class="form-group">
-                
-                <div class="col-md-10">
-                   <input class="form-control" value="ЧТО_ТОЫ"/>
-                
-                </div>
-            </div>
-        }
-        
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Создать" class="btn btn-default" />
-            </div>
-        </div>
+<form id="create_chemical_composition_form">
+    <div class="form-group">
+        <label for="name">Наименование</label>
+        <input type="text" class="form-control" id="name" placeholder="Введите название" required="required">
     </div>
-}
+    
+    @foreach (var el in baseElements)
+    {
+        <div class="form-group">
+            <label for="@el.Name">@el.Name</label>
+            <input type="text" class="form-control percentage" id="@el.Name" data-item-id="@el.Id" placeholder="Массовая доля, %" required="">
+        </div>
+    }
+    
+    <button type="submit" class="btn btn-dark-light submit">Сохранить</button>
+</form>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
 
-
 <script>
-    $(document).on("submit","#create_chemical_composition_form",function() {
-        return false;
-    });
+
+$("#create_chemical_composition_form").on('submit', function (event) {   
+    event.preventDefault();
+    
+    var chemicalElementsViewModels = [];
+            
+            $('.percentage').each(function( index ) {
+              var val = $(this).val();
+              var name = $(this).attr('id');
+              var id = $(this).data("itemId");
+              var obj = {
+                  id: id,
+                  name: name,
+                  percentage: val
+              };
+              chemicalElementsViewModels.push(obj);
+            });
+            
+            var name = $("#name").val();
+            var compositionModel = {
+                name: name,
+                elements:  chemicalElementsViewModels
+            };
+    
+            $.ajax({
+              type: 'POST',
+              url: "/ChemicalCompositions/Create",
+              data: compositionModel,
+              success: function(response) {
+                alert(response);
+              },
+              dataType: "application/json"
+            });
+    
+});
+
 </script>
+
+
+

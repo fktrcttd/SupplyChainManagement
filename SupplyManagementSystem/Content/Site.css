@@ -23,3 +23,8 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.btn-dark-light{
+ background-color: #dde2e7;
+ border-color: #888c91;
+}

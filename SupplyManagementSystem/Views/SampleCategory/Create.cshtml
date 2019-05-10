@@ -1,18 +1,17 @@
 @model SCM.ViewModels.SampleCategory.CreateSampleCategoryViewModel
 
 @{
-    ViewBag.Title = "Создание новой категории образцов";
+    ViewBag.Title = "Добавление категории образцов";
     var elements = (MultiSelectList) ViewBag.ChemicalElementsMultiSelect;
 }
 
-<h2>Создание новой категории образцов</h2>
+<h2>Добавление категории образцов</h2>
 
 @using (Html.BeginForm("Create", "SampleCategory", FormMethod.Post,new  
 {  
     enctype = "multipart/form-data"  
 })) 
 {
-    @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -40,7 +39,7 @@
         
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Добавить" class="btn btn-default submit" />
+                <input type="submit" value="Создать" class="btn btn-default submit" />
             </div>
         </div>
         
