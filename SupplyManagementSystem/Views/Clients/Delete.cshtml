@@ -17,23 +17,7 @@
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
-        
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        
-        <dt>
-            @Html.DisplayNameFor(model => model.ThirdName)
-        </dt>
-        
-        <dd>
-            @Html.DisplayFor(model => model.ThirdName)
-        </dd>
-
+       
         <dt>
             @Html.DisplayNameFor(model => model.Address)
         </dt>
@@ -55,7 +39,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            <input type="submit" value="Удалить" class="btn btn-dark-light" /> |
             @Html.ActionLink("Вернутсья к списку", "Index")
         </div>
     }

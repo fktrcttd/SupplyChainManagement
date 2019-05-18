@@ -49,7 +49,7 @@ namespace SCM.Controllers
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,FirstName,ThirdName,Address,Phone,DeleteForbidden,EditForbidden,Title,IsPublish,LastModifed")] Client client)
+        public ActionResult Create([Bind(Include = "Id,Name,Organization,Inn,Check,Address,Phone,DeleteForbidden,EditForbidden,Title,IsPublish,LastModifed")] Client client)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace SCM.Controllers
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,FirstName,ThirdName,Address,Phone,DeleteForbidden,EditForbidden,Title,IsPublish,LastModifed")] Client client)
+        public ActionResult Edit([Bind(Include = "Id,Name,Organization,Inn,Check,Address,Phone,DeleteForbidden,EditForbidden,Title,IsPublish,LastModifed")] Client client)
         {
             if (ModelState.IsValid)
             {
