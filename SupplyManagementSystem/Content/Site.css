@@ -24,6 +24,6 @@ textarea {
 }
 
 .btn-dark-light{
- background-color: #dde2e7;
- border-color: #888c91;
+ background-color: #dde2e7!important;
+ border-color: #888c91!important    ;
 }

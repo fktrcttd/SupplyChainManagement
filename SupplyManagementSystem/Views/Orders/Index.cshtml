@@ -6,11 +6,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Заказы</h2>
-
-<div class="text-right p-3">
-    <a href='@Url.Action("Create")' id="Add" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>&nbsp;Создать заказ</a>
-</div>
+<h1>Заказы</h1>
 
 <div class="container-fluid">
     <div class="row">
@@ -25,18 +21,23 @@
                   columns.Bound(p => p.Id).Title("Действия").ClientTemplate("<a href='" + @Url.Action("Edit", "Orders", new {id = "#=Id#"}) + "' class='btn btn-xs'>  <i class='fas fa-pen'></i></a>" + "<a href='" + @Url.Action("Delete", "Orders", new {id = "#=Id#"}) + "' class='btn btn-xs m-1'>  <i class='fas fa-trash'></i></a> ");
               })
               .Pageable()
-              .ToolBar(tools => tools.Excel())
               .Groupable()
               .Sortable()
               .Scrollable(s => s.Enabled(true))
               .Selectable(selectable => selectable
                   .Mode(GridSelectionMode.Multiple)
                   .Type(GridSelectionType.Row))
+              .ToolBar(t =>
+              {
+                  t.Custom().Url(Url.Action("Create")).HtmlAttributes(new {@class = "float-right"}).Text("Добавить заказ");
+                  t.Excel().Text("Экспортировать в Эксель");
+              })
               .Excel(excel => excel
                   .FileName("Заказы.xlsx")
                   .Filterable(true)
                   .ProxyURL(Url.Action("ExportExcel", "Excel"))
               )
+              .Filterable()
               .DataSource(dataSource => dataSource
                   .Ajax()
                   .PageSize(5)
