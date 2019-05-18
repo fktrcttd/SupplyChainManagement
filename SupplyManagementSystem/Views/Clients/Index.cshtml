@@ -18,9 +18,10 @@
               .Name("grid")
               .Columns(columns =>
               {
-                  columns.Bound(p => p.Name).Title("Фамилия");
-                  columns.Bound(p => p.FirstName).Title("Имя");
-                  columns.Bound(p => p.ThirdName).Title("Отчество");
+                  columns.Bound(p => p.Name).Title("ФИО");
+                  columns.Bound(p => p.Organization).Title("Организация");
+                  columns.Bound(p => p.Inn).Title("ИНН");
+                  columns.Bound(p => p.Check).Title("Расчетный счет");
                   columns.Bound(p => p.Phone).Title("Телефон");
                   columns.Bound(p => p.Address).Title("E-mail");
                   columns.Bound(p => p.Id).Title("Действия").ClientTemplate("<a href='" + @Url.Action("Edit", "Clients", new {id = "#=Id#"}) + "' class='btn btn-xs'>  <i class='fas fa-pen'></i></a>" + "<a href='" + @Url.Action("Delete", "Clients", new {id = "#=Id#"}) + "' class='btn btn-xs m-1'>  <i class='fas fa-trash'></i></a> ");
