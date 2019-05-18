@@ -17,7 +17,30 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
         
-      
+        <dt>
+            @Html.DisplayNameFor(model => model.Organization)
+        </dt>
+        
+        
+        <dd>
+            @Html.DisplayFor(model => model.Organization)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.Inn)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Inn)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.Check)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Check)
+        </dd>
+        
+        
         <dt>
             @Html.DisplayNameFor(model => model.Address)
         </dt>
@@ -38,5 +61,5 @@
 </div>
 <p>
     @Html.ActionLink("Редактировать", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Вернуться к списку", "Index")
+    @Html.ActionLink("Вернуться к списку клиентов", "Index")
 </p>

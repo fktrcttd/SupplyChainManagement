@@ -18,6 +18,30 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
        
+          <dt>
+                    @Html.DisplayNameFor(model => model.Organization)
+                </dt>
+        
+        <dd>
+            @Html.DisplayFor(model => model.Organization)
+        </dd>
+        
+          <dt>
+                    @Html.DisplayNameFor(model => model.Inn)
+                </dt>
+        
+        <dd>
+            @Html.DisplayFor(model => model.Inn)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Check)
+        </dt>
+        
+        
+        <dd>
+            @Html.DisplayFor(model => model.Check)
+        </dd>
+        
         <dt>
             @Html.DisplayNameFor(model => model.Address)
         </dt>
@@ -40,7 +64,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Удалить" class="btn btn-dark-light" /> |
-            @Html.ActionLink("Вернутсья к списку", "Index")
+            @Html.ActionLink("Вернутсья к списку клиентов", "Index")
         </div>
     }
 </div>

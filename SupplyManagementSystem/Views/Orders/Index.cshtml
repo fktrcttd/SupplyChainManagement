@@ -9,7 +9,7 @@
 <h2>Заказы</h2>
 
 <div class="text-right p-3">
-    <a href='@Url.Action("Create")' id="Add" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>&nbsp;Создать заказ</a>
+    <a href='@Url.Action("Create")' id="Add" class="btn btn-dark-light"><i class="glyphicon glyphicon-plus"></i>&nbsp;Создать заказ</a>
 </div>
 
 <div class="container-fluid">
@@ -20,7 +20,7 @@
               {
                   columns.Bound(p => p.Title).Title("Заказ");
                   columns.Bound(p => p.FormatDate).Title("Дата заказа");
-                  columns.Bound(p => p.QuantitySample).Title("Количество образцов");
+                  columns.Bound(p => p.OrganizationClient).Title("Организация клиента");
                   columns.Bound(p => p.IsFinishedAsString).Title("Статус");
                   columns.Bound(p => p.Id).Title("Действия").ClientTemplate("<a href='" + @Url.Action("Edit", "Orders", new {id = "#=Id#"}) + "' class='btn btn-xs'>  <i class='fas fa-pen'></i></a>" + "<a href='" + @Url.Action("Delete", "Orders", new {id = "#=Id#"}) + "' class='btn btn-xs m-1'>  <i class='fas fa-trash'></i></a> ");
               })

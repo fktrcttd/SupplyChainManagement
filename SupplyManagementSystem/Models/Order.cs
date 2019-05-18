@@ -41,7 +41,7 @@ namespace SCM.Models
         /// </summary>
         public ICollection<OrdersSample> OrdersSamples { get; set; }
         
-        [DisplayName("Количество образцов в заказе")]
-        public int QuantitySample { set; get; }
+        [DisplayName("Организация заказщика")]
+        public string OrganizationClient { set; get; }
     }
 }

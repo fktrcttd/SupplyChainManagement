@@ -28,11 +28,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.QuantitySample)
+            @Html.DisplayNameFor(model => model.OrganizationClient)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.QuantitySample)
+            @Html.DisplayFor(model => model.OrganizationClient)
         </dd>
 
         <dt>
@@ -48,8 +48,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-default" /> |
-            @Html.ActionLink("Вернуться к списку", "Index")
+            <input type="submit" value="Удалить" class="btn btn-dark-light" /> |
+            @Html.ActionLink("Вернуться к списку заказов", "Index")
         </div>
     }
 </div>
