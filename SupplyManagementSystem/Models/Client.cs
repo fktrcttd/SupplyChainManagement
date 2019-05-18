@@ -30,7 +30,7 @@ namespace SCM.Models
         /// <summary>
         /// Адрес электронной почты
         /// </summary>
-        [DisplayName("Адрес")]
+        [DisplayName("E-mail")]
         public string Address { set; get; }
 
         [DisplayName("Номер телефона")]
