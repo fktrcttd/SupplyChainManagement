@@ -1,9 +1,12 @@
 using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using SCM.DataService.DataContext;
 
 namespace SCM.Models.IdentityModels
 {
@@ -19,5 +22,15 @@ namespace SCM.Models.IdentityModels
         
         [DisplayName("ФИО")]
         public String Name { get; set; }
+
+        [NotMapped] public string RoleAsString => GetRole();
+
+        private string GetRole()
+        {
+            var ctx = AppDataContext.JoinOrOpen();
+            var roleId = this.Roles.FirstOrDefault()?.RoleId;
+            var role = ctx.Roles.FirstOrDefault(r => r.Id == roleId);
+            return role != null ? role.Name : "Не определена";
+        }
     }
 }

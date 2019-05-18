@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using PagedList;
@@ -25,6 +27,13 @@ namespace SCM.Controllers
             return View("Users/Index",AppUserManager.Users.OrderBy(u => u.Id).ToPagedList(pageNumber, pageSize));
         }
         
+        public ActionResult UsersRead([DataSourceRequest]DataSourceRequest request)
+        {
+            var context = new AppDataContext();
+            var users = context.Users.ToList();
+            return Json(users.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+        }
+        
         public ActionResult CreateUser() => PartialView("Users/Partials/Create");
 
         [HttpPost]
@@ -34,7 +43,7 @@ namespace SCM.Controllers
             {
                 var ctx = AppDataContext.JoinOrOpen();
                 var roleName = ctx.Roles.FirstOrDefault(r => r.Id == model.RoleId);
-                ScmUser scmUser = new ScmUser { UserName = model.Email, Email = model.Email};
+                ScmUser scmUser = new ScmUser { UserName = model.Email, Email = model.Email, Name = model.Name};
                 IdentityResult result =
                     await AppUserManager.CreateAsync(scmUser, model.Password);
 
@@ -154,6 +163,8 @@ namespace SCM.Controllers
             }
             return RedirectToAction("UsersList");
         }
+        
+        
 
         #endregion
 

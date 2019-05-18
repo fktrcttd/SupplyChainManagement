@@ -81,7 +81,7 @@ namespace SCM.Controllers
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Address,Phone,DeleteForbidden,EditForbidden,Title,IsPublish,LastModifed")] Client client)
+        public ActionResult Edit([Bind(Include = "Id,Name,FirstName,ThirdName,Address,Phone,DeleteForbidden,EditForbidden,Title,IsPublish,LastModifed")] Client client)
         {
             if (ModelState.IsValid)
             {

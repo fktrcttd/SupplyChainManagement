@@ -17,8 +17,7 @@
     @Html.Partial("~/Views/Admin/Users/Partials/UsersList.cshtml", Model)
 </div>
 
-<div>Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount </div>
-@Html.PagedListPager(Model, page => Url.Action("UsersList", new {page}))
+
 
 <div class="modal fade" id="Add-Model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -64,14 +63,23 @@
                 backdrop: 'static',
             }, 'show');
         });
-        $('.editDialog').click(function (event) {
-            event.preventDefault();
-            $.get(this.href, function (response) {
-                $('.divForUpdate').html(response);
-            });
-            $('#Edit-Model').modal({
-                backdrop: 'static',
-            }, 'show');
+    });
+    
+    $(document).on("click",".deleter",function() {
+                        $.post(this.href, function (response) {
+                            window.location.reload(false); 
+                        });
+                       
+                        return false;
         });
+    
+    $(document).on("click",".editDialog",function() {
+                    $.get(this.href, function (response) {
+                        $('.divForUpdate').html(response);
+                    });
+                    $('#Edit-Model').modal({
+                        backdrop: 'static',
+                    }, 'show');
+                    return false;
     });
 </script>

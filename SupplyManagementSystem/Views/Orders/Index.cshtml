@@ -19,9 +19,9 @@
               .Columns(columns =>
               {
                   columns.Bound(p => p.Title).Title("Заказ");
-                  columns.Bound(p => p.Date).Title("Дата заказа");
-                  columns.Bound(p => p.IsFinished).Title("Количество образцов");
-                  columns.Bound(p => p.QuantitySample).Title("Статус");
+                  columns.Bound(p => p.FormatDate).Title("Дата заказа");
+                  columns.Bound(p => p.QuantitySample).Title("Количество образцов");
+                  columns.Bound(p => p.IsFinishedAsString).Title("Статус");
                   columns.Bound(p => p.Id).Title("Действия").ClientTemplate("<a href='" + @Url.Action("Edit", "Orders", new {id = "#=Id#"}) + "' class='btn btn-xs'>  <i class='fas fa-pen'></i></a>" + "<a href='" + @Url.Action("Delete", "Orders", new {id = "#=Id#"}) + "' class='btn btn-xs m-1'>  <i class='fas fa-trash'></i></a> ");
               })
               .Pageable()
