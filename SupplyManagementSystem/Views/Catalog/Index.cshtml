@@ -3,19 +3,17 @@
 @model SCM.ViewModels.CatalogViewModel
 
 @{
-  string title = "???????";
-  ViewBag.Title = title;
-  var addCategoryTitle = "???????? ?????????";
+  ViewBag.Title = "Каталог";
   var grouped = Model.SampleCategories.Split(3);
 }
 
-<h2>@title</h2>
+<h2>Каталог</h2>
 
 <div class="container-fluid">
   
   @if (Request.IsAuthenticated)
   {
-    <a class="btn btn-dark-light mt-3 mb-3 " href="@Url.Action("Create", "SampleCategory")">@addCategoryTitle</a>  
+    <a class="btn btn-dark-light mt-3 mb-3 " href="@Url.Action("Create", "SampleCategory")">Добавить категорию</a>  
   }
 
   @foreach (var group in grouped)
@@ -38,13 +36,10 @@
             @categoy.Title
           </div>
         </div>
-        <!-- Card -->
       }
 
     </div>
-    <!-- Card deck -->
   }
-
 </div>
 
 
