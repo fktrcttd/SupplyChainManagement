@@ -9,9 +9,11 @@ using Kaliko.ImageLibrary;
 using SCM.DataService.DataContext;
 using SCM.Models;
 using SCM.ViewModels.SampleCategory;
+using WebApp.Infrastructure;
 
 namespace SCM.Controllers
 {
+    [Authorize]
     public class SampleCategoryController : Controller
     {
         public ActionResult Create()
@@ -34,11 +36,14 @@ namespace SCM.Controllers
             string uploadPath = Server.MapPath("~/Content/Images/SampleCategoryImages");
             string newFileOne = Path.Combine(uploadPath, image.FileName);  
             image.SaveAs(newFileOne);
+
+            var imageName = Transliterator.Convert(category.Title)+ ".jpg";
             
             var processingImage = new KalikoImage(Path.Combine(uploadPath, image.FileName));
             processingImage.Resize(600, 400);
-            processingImage.SaveImage(Path.Combine(uploadPath, category.Title+".jpg"), ImageFormat.Jpeg);
-            category.ImageName = category.Id + ".jpg";
+            processingImage.SaveImage(Path.Combine(uploadPath, imageName), ImageFormat.Jpeg);
+
+            category.ImageName = imageName;
             context.Add(category);
             context.Commit();
             return View(new CreateSampleCategoryViewModel());

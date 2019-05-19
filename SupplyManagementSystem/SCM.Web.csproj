@@ -240,6 +240,7 @@
     <Compile Include="DataService\Interfaces\ILogger.cs" />
     <Compile Include="DataService\Interfaces\IPropertyCondition.cs" />
     <Compile Include="Domain\Enums\SampleCategoryType.cs" />
+    <Compile Include="Domain\Transilrerate\Transliterator.cs" />
     <Compile Include="Extensions\LinqExtension.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

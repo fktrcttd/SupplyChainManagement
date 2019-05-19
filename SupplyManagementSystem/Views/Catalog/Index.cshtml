@@ -1,42 +1,55 @@
+@using SCM.Controllers
 @using SCM.Extensions
 @model SCM.ViewModels.CatalogViewModel
 
 @{
-    ViewBag.Title = "Catalog";
+  string title = "Каталог";
+  ViewBag.Title = title;
+  var addCategoryTitle = "Добавить категорию";
   var grouped = Model.SampleCategories.Split(3);
 }
 
-<h2>Каталог</h2>
+<h2>@title</h2>
 
-<div class="float-right">
-  <a class="btn btn-dark-light"></a>
-</div>
-
-@foreach (var group in grouped)
-{
-<div class="card-deck">
+<div class="container-fluid">
   
-  @foreach (var  categoy in group)
+  @if (Request.IsAuthenticated)
   {
-    <div class="card mb-4">
-      <div class="view overlay">
-        <img class="card-img-top" src="@($"/Content/Images/SampleCategoryImages/{categoy.ImageName}")" alt="Card image cap">
-        <a href="@Url.Action("Category", new {id = categoy.Id})">
-          <div class="mask rgba-white-slight h3">@categoy.Title</div>
-        </a>
-      </div>
-      <div class="card-body">
-        @*<h4 class="card-title">@categoy.Title</h4>*@
-      </div>
-      <div class="card-footer">
-        @categoy.Title
-      </div>
+    <a class="btn btn-dark-light mt-3 mb-3 " href="@Url.Action("Create", "SampleCategory")">@addCategoryTitle</a>  
+  }
+  
+
+
+
+  @foreach (var group in grouped)
+  {
+    <div class="card-deck">
+
+      @foreach (var  categoy in group)
+      {
+        <div class="card mb-4">
+          <div class="view overlay">
+            <img class="card-img-top" src="@($"/Content/Images/SampleCategoryImages/{categoy.ImageName}")" alt="Card image cap">
+            <a href="@Url.Action("Category", new {id = categoy.Id})">
+              <div class="mask rgba-white-slight h3">@categoy.Title</div>
+            </a>
+          </div>
+          <div class="card-body">
+            @*<h4 class="card-title">@categoy.Title</h4>*@
+          </div>
+          <div class="card-footer">
+            @categoy.Title
+          </div>
+        </div>
+        <!-- Card -->
+      }
+
     </div>
-    <!-- Card -->
+    <!-- Card deck -->
   }
 
 </div>
-<!-- Card deck -->  
-}
+
+
 
 
