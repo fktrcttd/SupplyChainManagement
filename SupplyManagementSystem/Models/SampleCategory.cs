@@ -24,7 +24,7 @@ namespace SCM.Models
         [DisplayName("Область применения образцов")]
         public SampleCategoryType SampleCategoryType { get; set; }
         
-        [DisplayName("Виртуальный путь к картинке")]
-        public string ImageName { get; set; }
+        [DisplayName("Ссылка на картинку")]
+        public string ImageLink { get; set; }
     }
 }

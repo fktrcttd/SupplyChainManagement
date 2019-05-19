@@ -8,7 +8,7 @@ namespace SCM
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/Scripts/jquery-{version}.js"));
+                "~/Scripts/jquery-{version}.js", "~/Scripts/chosen.jquery.js"));
             
             
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -39,7 +39,8 @@ namespace SCM
                 "~/Content/bootstrap.min.css",
                 "~/Content/site.css",
                 "~/Content/simple-sidebar.css",
-                "~/Content/bootstrap-vertical-tabs.css"
+                "~/Content/bootstrap-vertical-tabs.css",
+                "~/Content/chosen.css"
                 ));
         }
     }

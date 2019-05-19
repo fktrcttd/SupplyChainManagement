@@ -1,32 +1,67 @@
+п»ї@using Kendo.Mvc.UI
+@using SCM.DataService.DataContext
 @model IEnumerable<SCM.Models.ChemicalComposition>
 @{
 
     var categoryId = ViewBag.CategoryId;
-    var categoryName = (string)ViewBag.CategoryName;
-}
+    var categoryName = (string) ViewBag.CategoryName;
 
+    Boolean isAdmin = Request.IsAuthenticated;
+}
 
 
 <h1>
     @categoryName
 </h1>
 
+@if (isAdmin)
+{
+    <a class="btn btn-dark-light mb-3 mt-3" href="@Url.Action("Create", "ChemicalCompositions", new {categoryId = categoryId})">Р”РѕР±Р°РІРёС‚СЊ С…РёРјРёС‡РµСЃРєРёР№ СЃРѕСЃС‚Р°РІ</a>
+}
 
-<a class="btn btn-default" href="@Url.Action("Create","ChemicalCompositions", new {categoryId = categoryId})">Добавить химический состав</a>
 <table class="table">
     <tbody>
     @foreach (var composition in Model)
     {
         <tr>
             <td>
-                <div class="row">@composition.Title</div>
-                <div class="row">@composition.Index</div>
-                <div class="row">50 г.</div>
+                <img src="https://pp.userapi.com/c851520/v851520523/121214/ONb-jQOlf4A.jpg" />
             </td>
-            <td></td>
-            <td></td>
+
+            <td>
+                <div class="row">@composition.Title</div>
+                <div class="row">50 Рі.</div>
+            </td>
+
+            <td>
+                @(Html.Kendo().Chart()
+                    .Name($"chart{composition.Id}").Theme("bootstrap")
+                    .Series(series =>
+                            {
+
+                        var elements = composition.CompositionsElements.Select(e => new { category = $"{e.ChemicalElement.Symbol} - {e.Percentage} %", value = e.Percentage });
+                        series.Pie(elements)
+                        .Labels(labels =>
+                        {
+                            labels
+                                .Position(ChartPieLabelsPosition.Center).Background("transparent")
+                                .Visible(false)
+                                .Template("#= kendo.format('{0:P}', percentage)#");
+                        });
+                    }).ChartArea(c => c.Height(150).Width(300))
+                )
+
+            </td>
+
+            @if (isAdmin)
+            {
+                <td>
+                    <a href=' @Url.Action("Delete", "ChemicalCompositions", new {id = composition.Id}) ' class='btn btn-xs m-1'>  <i class='fas fa-trash'></i></a>
+                </td>
+            }
+
         </tr>
     }
-    
+
     </tbody>
 </table>

@@ -10,7 +10,7 @@
 
 <h2>Химический состав</h2>
 
-<form id="create_chemical_composition_form">
+<form id="create_chemical_composition_form" data-category-id="@category.Id">
     <div class="form-group">
         <label for="name">Наименование</label>
         <input type="text" class="form-control" id="name" placeholder="Введите название" required="required">
@@ -35,7 +35,7 @@
 
 $("#create_chemical_composition_form").on('submit', function (event) {   
     event.preventDefault();
-    
+    var categoryId = $(this).data("categoryId");
     var chemicalElementsViewModels = [];
             
             $('.percentage').each(function( index ) {
@@ -51,7 +51,8 @@ $("#create_chemical_composition_form").on('submit', function (event) {
             });
             
             var name = $("#name").val();
-            var compositionModel = {
+    var compositionModel = {
+                categoryId: categoryId,
                 name: name,
                 elements:  chemicalElementsViewModels
             };
@@ -61,11 +62,11 @@ $("#create_chemical_composition_form").on('submit', function (event) {
               url: "/ChemicalCompositions/Create",
               data: compositionModel,
               success: function(response) {
-                alert(response);
+               
               },
               dataType: "application/json"
             });
-    
+    window.location.href = "/Catalog";
 });
 
 </script>

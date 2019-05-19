@@ -19,10 +19,8 @@ namespace SCM.ViewModels.SampleCategory
         public int[] BaseChemicalElementId { get; set; }
         
         //To change label title value  
-        [DisplayName("Upload File")]  
-        public string ImagePath { get; set; }  
-  
-        public HttpPostedFileBase ImageFile { get; set; } 
+        [DisplayName("Ссылка на изображение")]  
+        public string ImageLink { get; set; }  
 
     }
 }

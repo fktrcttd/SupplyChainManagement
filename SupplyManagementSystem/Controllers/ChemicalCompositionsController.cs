@@ -69,10 +69,12 @@ namespace SCM.Controllers
         {
             if (ModelState.IsValid)
             {
-                var newOne = new ChemicalComposition();
-                newOne.Title = model.Name;
-                db.Add(newOne);
+                var newChemicalComposition = new ChemicalComposition();
+                newChemicalComposition.Title = model.Name;
+                newChemicalComposition.SampleCategory = db.SampleCategories.FirstOrDefault(c => c.Id == model.CategoryId);
+                db.ChemicalCompositions.Add(newChemicalComposition);
                 db.SaveChanges();
+
                 var newElements =  model.Elements
                     .Select(e =>
                     {
@@ -82,17 +84,19 @@ namespace SCM.Controllers
                             Percentage = e.Percentage,
                             ChemicalElementId = dbElement.Id,
                             ChemicalElement = dbElement,
-                            ChemicalComposition = newOne
+                            ChemicalComposition = newChemicalComposition,
+                            ChemicalCompositionId = newChemicalComposition.Id
                         };
-                    });
+                    })
+                    .ToList();
 
-                foreach (var chemicalElement in newElements)
+                foreach(var el in newElements)
                 {
-                    newOne.CompositionsElements.Add(chemicalElement);
+                    db.CompositionsElements.Add(el);
                 }
-
+                
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Catalog");
             }
 
             return View(model);
@@ -150,9 +154,14 @@ namespace SCM.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             ChemicalComposition chemicalComposition = db.ChemicalCompositions.Find(id);
+            var elements = chemicalComposition.CompositionsElements.ToList();
+            foreach (var el in elements)
+            {
+                db.CompositionsElements.Remove(el);
+            }
             db.ChemicalCompositions.Remove(chemicalComposition);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Catalog");
         }
 
         protected override void Dispose(bool disposing)

@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using System.Configuration;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Kaliko.ImageLibrary;
 using SCM.DataService.DataContext;
@@ -29,24 +27,13 @@ namespace SCM.Controllers
             var context = new AppDataContext();
             var elements = model.BaseChemicalElementId != null && model.BaseChemicalElementId.Any()
                 ? context.ChemicalElements.Where(e => model.BaseChemicalElementId.Contains(e.Id)).ToList() : new List<ChemicalElement>();
-            var category = new SampleCategory();
-            category.Title = model.Title;
-            category.ChemicalElements = elements;
-            var image = model.ImageFile;
-            string uploadPath = Server.MapPath("~/Content/Images/SampleCategoryImages");
-            string newFileOne = Path.Combine(uploadPath, image.FileName);  
-            image.SaveAs(newFileOne);
-
-            var imageName = Transliterator.Convert(category.Title)+ ".jpg";
-            
-            var processingImage = new KalikoImage(Path.Combine(uploadPath, image.FileName));
-            processingImage.Resize(600, 400);
-            processingImage.SaveImage(Path.Combine(uploadPath, imageName), ImageFormat.Jpeg);
-
-            category.ImageName = imageName;
+            var category = new SampleCategory
+            {
+                Title = model.Title, ChemicalElements = elements, ImageLink = model.ImageLink
+            };
             context.Add(category);
             context.Commit();
-            return View(new CreateSampleCategoryViewModel());
+            return RedirectToAction("Index", "Catalog");
         }
 
         private void ResolveViewBag()
