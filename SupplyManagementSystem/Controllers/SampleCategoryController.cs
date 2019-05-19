@@ -37,8 +37,8 @@ namespace SCM.Controllers
             
             var processingImage = new KalikoImage(Path.Combine(uploadPath, image.FileName));
             processingImage.Resize(600, 400);
-            processingImage.SaveImage(Path.Combine(uploadPath, category.Title+".jpeg"), ImageFormat.Jpeg);
-            category.ImageName = category.Title + ".jpeg";
+            processingImage.SaveImage(Path.Combine(uploadPath, category.Title+".jpg"), ImageFormat.Jpeg);
+            category.ImageName = category.Id + ".jpg";
             context.Add(category);
             context.Commit();
             return View(new CreateSampleCategoryViewModel());
