@@ -36,66 +36,7 @@ namespace SCM.DataService.DataContext
                 // добавляем для пользователя роль
                 userManager.AddToRole(admin.Id, adminRole.Name);
 
-            InitSampleCategories(context);
-            InitElements(db:context);
-        }
-
-
-        public void InitSampleCategories(AppDataContext context)
-        {
-//            if (context.SampleCategories.Any())
-//                return;
-//            var steel = new SampleCategory();
-//            steel.Title = "Стали";
-//            steel.SampleCategoryType = SampleCategoryType.ChemicalAnalysis;
-//            
-//            var castIron = new SampleCategory();
-//            castIron.Title = "Чугуны";
-//            castIron.SampleCategoryType = SampleCategoryType.ChemicalAnalysis;
-//            
-//            var nicelBased = new SampleCategory();
-//            nicelBased.Title = "Сплавы на никелевой основе";
-//            nicelBased.SampleCategoryType = SampleCategoryType.ChemicalAnalysis;
-//            context.SampleCategories.Add(steel);
-//            context.SampleCategories.Add(nicelBased);
-//            context.SampleCategories.Add(castIron);
-//            context.SaveChanges();
-        }
-
-        private void InitElements(AppDataContext db)
-        {
-            if(db.ChemicalElements.Count() < 4)
-            {
-                var elements = ParseJsonHelper.GetChemicalElements()
-                    .Select(el => new ChemicalElement { Title = el.name, Symbol = el.symbol});
-
-                foreach (var el in elements)
-                {
-                    db.ChemicalElements.Add(el);
-                }
-                db.SaveChanges();
-            }
-
-//            if (!db.ChemicalCompositions.Any())
-//            {
-//                var newChemicalComposition = new ChemicalComposition();
-//                newChemicalComposition.Title = "тестовый состав";
-//                newChemicalComposition.Index = "тс1";
-//                newChemicalComposition.SampleCategoryId = 4;
-//                db.ChemicalCompositions.Add(newChemicalComposition);
-//                db.SaveChanges();
-//
-//                newChemicalComposition.CompositionsElements = db.ChemicalElements
-//                    .Where(e => e.Id < 20).ToList()
-//                    .Select(e => new CompositionsElement()
-//                    {
-//                        Percentage = 2,
-//                        ChemicalElementId = e.Id, 
-//                        ChemicalCompositionId = newChemicalComposition.Id
-//                    })
-//                    .ToList();
-//                db.SaveChanges();    
-//            }
+     
         }
     }
 }

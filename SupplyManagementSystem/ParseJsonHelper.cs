@@ -10,9 +10,9 @@ namespace SCM
 {
     public static class ParseJsonHelper
     {
-        public static List<ChemicalElementInJson> GetChemicalElements()
+        public static List<ChemicalElementInJson> GetChemicalElements(string path)
         {
-            String value = File.ReadAllText(@"C:\\ReadAllText\\Read.txt");
+            String value = File.ReadAllText(path);
             var parsed = JsonConvert.DeserializeObject<List<ChemicalElementInJson>>(value);
             return parsed;
 

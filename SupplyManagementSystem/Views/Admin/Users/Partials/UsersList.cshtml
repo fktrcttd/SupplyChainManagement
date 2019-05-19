@@ -19,9 +19,13 @@
                       .ClientTemplate("<a href='" + @Url.Action("EditUser", "Admin", new {id = "#=Id#"}) + "' class='btn btn-xs editDialog'>  <i class='fas fa-pen'></i></a>" + "<a href='" + @Url.Action("DeleteUser", "Admin", new {id = "#=Id#"}) + "' class='btn btn-xs m-1 deleter'>  <i class='fas fa-trash'></i></a> ");
               })
               .Pageable()
-              .ToolBar(tools => tools.Excel())
+              .ToolBar(tools =>
+              {
+                  tools.Excel().Text("Экспортировать к Эксель"); 
+                  tools.Custom().Url(Url.Action("CreateUser", "Admin")).HtmlAttributes(new {@class = "float-right"}).Text("Добавить пользователя");
+              })
               .Groupable()
-              .Sortable()
+              .Sortable().Filterable()
               .Scrollable(s => s.Enabled(true))
               .Selectable(selectable => selectable
                   .Mode(GridSelectionMode.Multiple)

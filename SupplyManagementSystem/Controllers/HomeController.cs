@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using SCM.DataService.DataContext;
+using SCM.Models;
 
 namespace SCM.Controllers
 {
@@ -13,9 +14,48 @@ namespace SCM.Controllers
     {
         public ActionResult Index()
         {
-            if (!Request.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+            Init();
+
             return View();
+        }
+
+        private void Init()
+        {
+            var db = new AppDataContext();
+            if (db.ChemicalElements.Count() < 4)
+            {
+                string path = Server.MapPath("~/Content/Parse/elements.txt");
+                var elements = ParseJsonHelper.GetChemicalElements(path)
+                    .Select(el => new ChemicalElement {Title = el.name, Symbol = el.symbol});
+
+                foreach (var el in elements)
+                {
+                    db.ChemicalElements.Add(el);
+                }
+
+                db.SaveChanges();
+            }
+
+//            if (!db.ChemicalCompositions.Any())
+//            {
+//                var newChemicalComposition = new ChemicalComposition();
+//                newChemicalComposition.Title = "тестовый состав";
+//                newChemicalComposition.Index = "тс1";
+//                newChemicalComposition.SampleCategoryId = 4;
+//                db.ChemicalCompositions.Add(newChemicalComposition);
+//                db.SaveChanges();
+//
+//                newChemicalComposition.CompositionsElements = db.ChemicalElements
+//                    .Where(e => e.Id < 20).ToList()
+//                    .Select(e => new CompositionsElement()
+//                    {
+//                        Percentage = 2,
+//                        ChemicalElementId = e.Id,
+//                        ChemicalCompositionId = newChemicalComposition.Id
+//                    })
+//                    .ToList();
+//                db.SaveChanges();
+//            }
         }
 
         public ActionResult About()

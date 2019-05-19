@@ -12,10 +12,6 @@
 @*Грид*@
 
 
-<div class="text-right p-3">
-    <a href='@Url.Action("Create")' class="btn btn-dark-light"><i class="glyphicon glyphicon-plus"></i>&nbsp;Добавить клиента</a>
-</div>
-
 <div class="container-fluid">
     <div class="row">
         @(Html.Kendo().Grid<Client>().Resizable(c => c.Columns(true))
@@ -30,7 +26,7 @@
                   columns.Bound(p => p.Address).Title("E-mail");
                   columns.Bound(p => p.Id).Title("Действия").ClientTemplate("<a href='" + @Url.Action("Edit", "Clients", new {id = "#=Id#"}) + "' class='btn btn-xs'>  <i class='fas fa-pen'></i></a>" + "<a href='" + @Url.Action("Delete", "Clients", new {id = "#=Id#"}) + "' class='btn btn-xs m-1'>  <i class='fas fa-trash'></i></a> ");
               })
-              .Pageable()
+              
               .ToolBar(tools => tools.Excel().Text("Экспортировать в Эксель"))
               .Groupable()
               .Sortable()
@@ -38,16 +34,23 @@
               .Selectable(selectable => selectable
                   .Mode(GridSelectionMode.Multiple)
                   .Type(GridSelectionType.Row))
+              .ToolBar(t =>
+              {
+                  t.Custom().Url(Url.Action("Create")).HtmlAttributes(new {@class = "float-right"}).Text("Добавить клиента");
+              })
               .Excel(excel => excel
                       .FileName("Цехи.xlsx")    
                       .Filterable(true)
                       .ProxyURL(Url.Action("ExportExcel", "Excel"))
               )
+              .Pageable()
+              .Filterable()
               .DataSource(dataSource => dataSource
                   .Ajax()
                   .PageSize(5)
                   //Метод должен быть в контроллере.
                   .Read(read => read.Action("ClientsRead", "Clients"))
               ))
+        
     </div>
 </div>
