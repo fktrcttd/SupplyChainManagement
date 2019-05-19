@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using SCM.DataService.DataContext;
@@ -14,6 +16,18 @@ namespace SCM.Controllers
 {
     public class ChemicalCompositionsController : Controller
     {
+        
+        protected override void Initialize(System.Web.Routing.RequestContext requestContext)
+        {
+            base.Initialize(requestContext);
+
+            const string culture = "ru-RU";
+            CultureInfo ci = CultureInfo.GetCultureInfo(culture);
+
+            Thread.CurrentThread.CurrentCulture = ci;
+            Thread.CurrentThread.CurrentUICulture = ci;
+        }
+        
         private AppDataContext db = new AppDataContext();
 
         // GET: ChemicalCompositions
