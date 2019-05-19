@@ -1,13 +1,14 @@
 @model IEnumerable<SCM.Models.ChemicalComposition>
 @{
 
-    var categoryId = ViewBag.CategoryId;     
+    var categoryId = ViewBag.CategoryId;
+    var categoryName = (string)ViewBag.CategoryName;
 }
 
 
 
 <h1>
-    Категория
+    @categoryName
 </h1>
 
 

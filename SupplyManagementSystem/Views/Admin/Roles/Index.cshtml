@@ -1,4 +1,5 @@
-﻿@using SCM.Models
+﻿@using Kendo.Mvc.UI
+@using SCM.Models
 @using SCM.DataService.Helpers
 @using SCM.Models.IdentityModels
 @model IEnumerable<ScmRole>
@@ -9,50 +10,37 @@
 }
 
 <h2>Реестр ролей пользователей</h2>
-<div class="panel panel-primary">
-    <div class="panel-heading">Roles</div>
-    <table class="table table-striped">
-        <tr>
-            <th>ID</th>
-            <th>Название</th>
-            <th>Пользователи</th>
-            <th style="min-width: 150px"></th>
-        </tr>
-        @if (Model.Count() == 0) 
-        {
-        <tr>
-            <td colspan="4" class="text-center">Нет ролей</td>
-        </tr>
-        } 
-        else 
-        {
-            foreach (ScmRole role in Model) {
-            <tr>
-                <td>@role.Id</td>
-                <td>@role.Name</td>
-                <td>
-                    @if (role.Users.Count == 0) 
-                    {
-                        @: Нет пользователей в этой роли
-                    } 
-                    else 
-                    {
-                        <p>@string.Join(", ", role.Users.Select(x =>
-                            Html.GetUserName(x.UserId)))
-                        </p>
-                    }
-                </td>
-                <td>
-                @using (Html.BeginForm("DeleteRole", "Admin", new { id = role.Id })) 
-                {
-                    @Html.ActionLink("Изменить", "EditRole", new { id = role.Id }, 
-                        new { @class = "btn btn-primary btn-xs", style= "float:left; margin-right:5px" })
-                    <button class="btn btn-danger btn-xs" type="submit">Удалить</button>
-                }
-                </td>
-            </tr>
-            }
-        }
-    </table>
+
+<div class="container-fluid">
+    <div class="row">
+        @(Html.Kendo().Grid<ScmRole>().Resizable(c => c.Columns(true))
+              .Name("grid")
+              .Columns(columns =>
+              {   
+                  columns.Bound(p => p.Name).Title("Роль");
+                  columns.Bound(p => p.UsersEmails).Title("Пользователи");
+                  columns.Bound(p => p.Id).Title("Действия").ClientTemplate("<a href='" + @Url.Action("EditRole", "Admin", new {id = "#=Id#"}) + "' class='btn btn-xs'>  <i class='fas fa-pen'></i></a>" + "<a href='" + @Url.Action("DeleteRole", "Admin", new {id = "#=Id#"}) + "' class='btn btn-xs m-1'>  <i class='fas fa-trash'></i></a> ");
+              })
+              .Pageable()
+              .Groupable()
+              .Sortable()
+              .Scrollable(s => s.Enabled(true))
+              .ToolBar(t =>
+              {
+                  t.Custom().Url(Url.Action("CreateRole")).HtmlAttributes(new {@class = "float-right"}).Text("Добавить роль");
+                  t.Excel().Text("Экспортировать в Эксель");
+              })
+              .Excel(excel => excel
+                  .FileName("Роли.xlsx")
+                  .Filterable(true)
+                  .ProxyURL(Url.Action("ExportExcel", "Excel"))
+              )
+              .Filterable()
+              .DataSource(dataSource => dataSource
+                  .Ajax()
+                  .PageSize(5)
+                  //Метод должен быть в контроллере.
+                  .Read(read => read.Action("RolesRead", "Admin"))
+              ))
+    </div>
 </div>
-@Html.ActionLink("Создать", "CreateRole", null, new { @class = "btn btn-primary" })

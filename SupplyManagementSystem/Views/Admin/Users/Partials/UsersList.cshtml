@@ -22,7 +22,7 @@
               .ToolBar(tools =>
               {
                   tools.Excel().Text("Экспортировать к Эксель"); 
-                  tools.Custom().Url(Url.Action("CreateUser", "Admin")).HtmlAttributes(new {@class = "float-right"}).Text("Добавить пользователя");
+                  tools.Custom().Url(Url.Action("CreateUser", "Admin")).HtmlAttributes(new {@class = "float-right", id = "Add"}).Text("Добавить пользователя");
               })
               .Groupable()
               .Sortable().Filterable()

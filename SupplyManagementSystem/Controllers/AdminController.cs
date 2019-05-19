@@ -193,6 +193,13 @@ namespace SCM.Controllers
             
             return View("Roles/Index", roles);
         }
+        
+        public ActionResult RolesRead([DataSourceRequest]DataSourceRequest request)
+        {
+            var context = new AppDataContext();
+            var roles = context.Roles.ToList();
+            return Json(roles.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult CreateRole()
         {
