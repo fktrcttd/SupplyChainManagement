@@ -3,17 +3,17 @@
 @model SCM.ViewModels.CatalogViewModel
 
 @{
-  ViewBag.Title = "Каталог";
+  ViewBag.Title = "РљР°С‚Р°Р»РѕРі";
   var grouped = Model.SampleCategories.Split(3);
 }
 
-<h2>Каталог</h2>
+<h2>РљР°С‚Р°Р»РѕРі</h2>
 
 <div class="container-fluid">
   
   @if (Request.IsAuthenticated)
   {
-    <a class="btn btn-dark-light mt-3 mb-3 " href="@Url.Action("Create", "SampleCategory")">Добавить категорию</a>  
+    <a class="btn btn-dark-light mt-3 mb-3 " href="@Url.Action("Create", "SampleCategory")">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</a>  
   }
 
   @foreach (var group in grouped)
