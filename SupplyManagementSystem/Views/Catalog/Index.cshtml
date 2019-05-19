@@ -3,9 +3,9 @@
 @model SCM.ViewModels.CatalogViewModel
 
 @{
-  string title = "РљР°С‚Р°Р»РѕРі";
+  string title = "Каталог";
   ViewBag.Title = title;
-  var addCategoryTitle = "Р”РѕР±Р°РІРёС‚СЊ РєР°С‚РµРіРѕСЂРёСЋ";
+  var addCategoryTitle = "Добавить категорию";
   var grouped = Model.SampleCategories.Split(3);
 }
 
@@ -17,9 +17,6 @@
   {
     <a class="btn btn-dark-light mt-3 mb-3 " href="@Url.Action("Create", "SampleCategory")">@addCategoryTitle</a>  
   }
-  
-
-
 
   @foreach (var group in grouped)
   {
