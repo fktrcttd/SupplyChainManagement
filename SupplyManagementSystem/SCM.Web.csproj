@@ -1007,10 +1007,8 @@
     <Content Include="Views\Admin\Users\Partials\UsersList.cshtml" />
     <Content Include="Views\Catalog\Category.cshtml" />
     <Content Include="Views\Catalog\CreateChemicalComposition.cshtml" />
-    <Content Include="Views\Catalog\Index.cshtml" />
     <Content Include="Views\ChemicalElement\Index.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\SampleCategory\Create.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1059,6 +1057,8 @@
     <Content Include="Views\ChemicalCompositions\Edit.cshtml" />
     <Content Include="Views\ChemicalCompositions\Index.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\SampleCategory\Create.cshtml" />
+    <Content Include="Views\Catalog\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

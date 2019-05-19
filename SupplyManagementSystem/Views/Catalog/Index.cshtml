@@ -1,47 +1,43 @@
-@using SCM.Controllers
+﻿@using SCM.Controllers
 @using SCM.Extensions
 @model SCM.ViewModels.CatalogViewModel
 
 @{
-  ViewBag.Title = "Каталог";
-  var grouped = Model.SampleCategories.Split(3);
+    ViewBag.Title = "Каталог";
+    var grouped = Model.SampleCategories.Split(3);
 }
 
 <h2>Каталог</h2>
 
 <div class="container-fluid">
-  
-  @if (Request.IsAuthenticated)
-  {
-    <a class="btn btn-dark-light mt-3 mb-3 " href="@Url.Action("Create", "SampleCategory")">�������� ���������</a>  
-  }
 
-  @foreach (var group in grouped)
-  {
-    <div class="card-deck">
+    @if (Request.IsAuthenticated)
+    {
+        <a class="btn btn-dark-light mt-3 mb-3 " href="@Url.Action("Create", "SampleCategory")">Каталог</a>
+    }
 
-      @foreach (var  categoy in group)
-      {
-        <div class="card mb-4">
-          <div class="view overlay">
-            <img class="card-img-top" src="@($"/Content/Images/SampleCategoryImages/{categoy.ImageName}")" alt="Card image cap">
-            <a href="@Url.Action("Category", new {id = categoy.Id})">
-              <div class="mask rgba-white-slight h3">@categoy.Title</div>
-            </a>
-          </div>
-          <div class="card-body">
-            @*<h4 class="card-title">@categoy.Title</h4>*@
-          </div>
-          <div class="card-footer">
-            @categoy.Title
-          </div>
+    @foreach (var group in grouped)
+    {
+        <div class="card-deck">
+
+            @foreach (var categoy in group)
+            {
+                <div class="card mb-4">
+                    <div class="view overlay">
+                        <img class="card-img-top" src="@($"/Content/Images/SampleCategoryImages/{categoy.ImageName}")" alt="Card image cap">
+                        <a href="@Url.Action("Category", new {id = categoy.Id})">
+                            <div class="mask rgba-white-slight h3">@categoy.Title</div>
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        @*<h4 class="card-title">@categoy.Title</h4>*@
+                    </div>
+                    <div class="card-footer">
+                        @categoy.Title
+                    </div>
+                </div>
+            }
+
         </div>
-      }
-
-    </div>
-  }
+    }
 </div>
-
-
-
-
