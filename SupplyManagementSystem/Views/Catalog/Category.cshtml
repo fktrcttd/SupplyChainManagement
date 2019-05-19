@@ -2,9 +2,11 @@
 @using SCM.DataService.DataContext
 @model IEnumerable<SCM.Models.ChemicalComposition>
 @{
-
+                                                  
+                                                  
     var categoryId = ViewBag.CategoryId;
     var categoryName = (string) ViewBag.CategoryName;
+    ViewBag.Title = categoryName;
 
     Boolean isAdmin = Request.IsAuthenticated;
 }

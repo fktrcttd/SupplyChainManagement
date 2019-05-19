@@ -1,10 +1,12 @@
 ﻿@using SCM.Controllers
+@using SCM.DataService.DataContext
 @using SCM.Extensions
 @model SCM.ViewModels.CatalogViewModel
 
 @{
     ViewBag.Title = "Каталог";
     var grouped = Model.SampleCategories.Split(3);
+    var compositions = AppDataContext.JoinOrOpen().ChemicalCompositions.ToList();
 }
 
 <h2>Каталог</h2>
@@ -24,16 +26,29 @@
             {
                 <div class="card mb-4">
                     <div class="view overlay">
-                        <img class="card-img-top" src="@categoy.ImageLink" alt="Изображение категории образцов">
+
                         <a href="@Url.Action("Category", new {id = categoy.Id})">
-                            <div class="mask rgba-white-slight h3">@categoy.Title</div>
+                            <img class="card-img-top" src="@categoy.ImageLink" alt="Изображение категории образцов">
                         </a>
+
+
                     </div>
                     <div class="card-body">
-                        @*<h4 class="card-title">@categoy.Title</h4>*@
+                        <h4 class="card-title">@categoy.Title</h4>
                     </div>
                     <div class="card-footer">
-                        @categoy.Title
+                        Всего образцов:
+                        @{
+                            int count = 0;
+                            foreach (var c in compositions)
+                            {
+                                if (c.SampleCategoryId == categoy.Id)
+                                {
+                                    count++;
+                                }
+                            }
+                        }
+                        @count
                     </div>
                 </div>
             }
