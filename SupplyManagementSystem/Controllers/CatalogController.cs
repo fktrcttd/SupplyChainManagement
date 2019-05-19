@@ -28,6 +28,7 @@ namespace SCM.Controllers
             var compositions = _context.ChemicalCompositions.Where(c => c.SampleCategoryId == category.Id).ToList();
 
             ViewBag.CategoryId = id;
+            ViewBag.CategoryName = category.Title;
             return View(compositions);
         }
 

@@ -216,6 +216,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="Controllers\ChemicalCompositionsController.cs" />
+    <Compile Include="Controllers\ChemicalElementController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\ExcelController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1006,6 +1007,7 @@
     <Content Include="Views\Catalog\Category.cshtml" />
     <Content Include="Views\Catalog\CreateChemicalComposition.cshtml" />
     <Content Include="Views\Catalog\Index.cshtml" />
+    <Content Include="Views\ChemicalElement\Index.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\SampleCategory\Create.cshtml" />
     <Content Include="Web.config">
