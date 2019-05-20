@@ -21,37 +21,36 @@
     @foreach (var group in grouped)
     {
         <div class="card-deck">
-
-            @foreach (var categoy in group)
-            {
-                <div class="card mb-4">
-                    <div class="view overlay">
-
-                        <a href="@Url.Action("Category", new {id = categoy.Id})">
-                            <img class="card-img-top" src="@categoy.ImageLink" alt="Изображение категории образцов">
-                        </a>
-
-
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">@categoy.Title</h4>
-                    </div>
-                    <div class="card-footer">
-                        Всего образцов:
-                        @{
-                            int count = 0;
-                            foreach (var c in compositions)
-                            {
-                                if (c.SampleCategoryId == categoy.Id)
-                                {
-                                    count++;
-                                }
-                            }
+            
+                        @foreach (var categoy in group)
+                        {
+                            <div class="card mb-4">
+                                <div class="view overlay">
+            
+                                    <a href="@Url.Action("Category", new {id = categoy.Id})">
+                                        <img class="card-img-top" src="@categoy.ImageLink" alt="Изображение категории образцов">
+                                    </a>
+            
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">@categoy.Title</h4>
+                                </div>
+                                <div class="card-footer">
+                                    Всего образцов:
+                                    @{
+                                        int count = 0;
+                                        foreach (var c in compositions)
+                                        {
+                                            if (c.SampleCategoryId == categoy.Id)
+                                            {
+                                                count++;
+                                            }
+                                        }
+                                    }
+                                    @count
+                                </div>
+                            </div>
                         }
-                        @count
-                    </div>
-                </div>
-            }
 
         </div>
     }

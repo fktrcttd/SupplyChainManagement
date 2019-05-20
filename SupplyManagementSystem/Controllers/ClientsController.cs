@@ -4,12 +4,14 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using SCM.DataService.DataContext;
 using SCM.Models;
+using SCM.ViewModels.Clients;
 
 namespace SCM.Controllers
 {
@@ -130,6 +132,48 @@ namespace SCM.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        
+        public ActionResult Order()
+        {
+            return PartialView("Partials/Request");
+        }
+        
+        [HttpPost]
+        public ActionResult Order(OrderViewModel model)
+        {
+            
+            //standartnye.obraztsy@yandex.ru
+            //sormSORM
+
+            var manager = db.Users.FirstOrDefault(u => u.Email == "standartnye.obraztsy@yandex.ru");
+            
+            // отправитель - устанавливаем адрес и отображаемое в письме имя
+            MailAddress from = new MailAddress("standartnye.obraztsy@yandex.ru", "Автоматическая рассылка ОСМ");
+            // кому отправляем
+            MailAddress to = new MailAddress(manager.Email);
+            // создаем объект сообщения
+            MailMessage m = new MailMessage(from, to);
+            // тема письма
+            m.Subject = "Поступила новая заявка";
+            // текст письма
+            m.Body = $"<h1>Поступила новая заявка:&nbsp;</h1>" +
+                     "<ul>"+
+                        $"<li>Город: {model.City}</li>"+
+                        $"<li>Имя заказчика: {model.Name}</li>"+
+                        $"<li>Номер телефона: {model.Phone}</li>"+
+                        $"<li>Комментари к заказу: {model.Comment}</li>"+
+                    "</ul>";
+            // письмо представляет код html
+            m.IsBodyHtml = true;
+            // адрес smtp-сервера и порт, с которого будем отправлять письмо
+            SmtpClient smtp = new SmtpClient("smtp.yandex.ru", 587);
+            // логин и пароль
+            smtp.Credentials = new NetworkCredential("standartnye.obraztsy@yandex.ru", "sormSORM");
+            smtp.EnableSsl = true;
+            //smtp.Send(m);
+            var markup = "<div class=\"container\"><h3>Спасибо за заявку!</h3>"+"<p>Менеджер скоро с вами свяжется!</p></div>";
+            return Content(markup);
         }
         
     }

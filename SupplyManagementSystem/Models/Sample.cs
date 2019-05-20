@@ -9,6 +9,8 @@ namespace SCM.Models
 {
     public class Sample : Entity
     {
+        [Display(Name = "Название")]
+        public new string Title { get; set; }
         /// <summary>
         /// Объект химического состава, из которого состоит образец
         /// </summary>
@@ -28,7 +30,7 @@ namespace SCM.Models
         /// <summary>
         /// Количество образца на складе
         /// </summary>
-        [Display(Name = "Количество образца на складе")]
+        [Display(Name = "Количество")]
         public int Amount { get; set; }
         
         [DisplayName("Ссылка на изображение")]

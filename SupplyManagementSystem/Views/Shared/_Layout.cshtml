@@ -74,6 +74,9 @@
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                   
 
+                    <li class="nav-item ">
+                                            <div class="nav-link linked-div" data-href="@Url.Action("Order","Clients")">Оставить заявку </div>
+                                        </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Дополнительно
@@ -97,10 +100,12 @@
                     }
                     else
                     {
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a class="nav-link" href="@(Url.Action("Login", "Account"))">Войти<span class="sr-only">(current)</span></a>
                         </li>  
                     }
+                    
+                    
                     
                       
                 </ul>
@@ -129,51 +134,8 @@
     
 </div>
 
-
-
-@*<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            @Html.ActionLink("ИСО", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-
-            @if (User.IsInRole("admin"))
-            {
-                @Html.ActionLink("Пользователи", "UsersList", "Admin", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Роли пользователей", "RoleList", "Admin", new { area = "" }, new { @class = "navbar-brand" })
-            }
-
-            @Html.ActionLink("Образцы", "Index", "Samples", new { area = "" }, new { @class = "navbar-brand" })
-            @Html.ActionLink("Клиенты", "Index", "Clients", new { area = "" }, new { @class = "navbar-brand" })
-            @Html.ActionLink("Заказы", "Index", "Orders", new { area = "" }, new { @class = "navbar-brand" })
-            @Html.ActionLink("Выпуски", "Index", "Releases", new { area = "" }, new { @class = "navbar-brand" })
-            @Html.ActionLink("Работники предприятия", "Index", "Workers", new { area = "" }, new { @class = "navbar-brand" })
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-            </ul>
-            @Html.Partial("_LoginPartial")
-        </div>
-    </div>
-</div>
-
-<div class="container body-content">
-    @RenderBody()
-    <hr/>
-    <footer>
-        <p>&copy; @DateTime.Now.Year – приложение Ticket store</p>
-    </footer>
-</div>*@
-<script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-</script>
+@Html.Partial("~/Views/Shared/Dialog/Modals.cshtml")
+<script src="~/Scripts/site.js"></script>
 
 </body>
 </html>
