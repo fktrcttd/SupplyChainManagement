@@ -15,12 +15,7 @@
         <label for="name">Наименование</label>
         <input type="text" class="form-control" id="name" placeholder="Введите название" required="required">
     </div>
-    
-    <div class="form-group">
-            <label for="image_link">Наименование</label>
-            <input type="text" class="form-control" id="image_link" placeholder="Ссылка на изображение" required="required">
-        </div>
-    
+
     @foreach (var el in baseElements)
     {
         <div class="form-group">
@@ -41,7 +36,6 @@
 $("#create_chemical_composition_form").on('submit', function (event) {   
     event.preventDefault();
     var categoryId = $(this).data("categoryId");
-    console.log(image_link);
     var chemicalElementsViewModels = [];
             
             $('.percentage').each(function( index ) {

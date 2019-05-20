@@ -51,6 +51,7 @@
             {
                 @Html.ActionLink("Клиенты", "Index", "Clients", new {area = ""}, new {@class = menuLinkclass})
                 @Html.ActionLink("Заказы", "Index", "Orders", new {area = ""}, new {@class = menuLinkclass})
+                @Html.ActionLink("Образцы", "Index", "Samples", new {area = ""}, new {@class = menuLinkclass})
             }
             @if (User.IsInRole("admin"))
             {

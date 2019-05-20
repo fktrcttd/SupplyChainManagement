@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -13,7 +14,9 @@ namespace SCM.Models
         [DisplayName("Наименование заказа")]
         public new string Title { set; get; }
 
-        [DisplayName("Дата заказа")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayName("Дата оформления заказа")]
         public DateTime Date { set; get; }
 
 
@@ -43,5 +46,19 @@ namespace SCM.Models
         
         [DisplayName("Организация заказщика")]
         public string OrganizationClient { set; get; }
+        
+        
+        /// <summary>
+        /// Объект химического состава, из которого состоит образец
+        /// </summary>
+        public virtual ChemicalComposition ChemicalComposition { get; set; }
+
+        /// <summary>
+        /// Вторичный ключ для связи с химическим составом. Не может отсутствовать
+        /// </summary>
+        [ForeignKey(nameof(ChemicalComposition))]
+        [DisplayName("Химический состав")]
+        [Required(ErrorMessage = "Обязательное поле")]
+        public int ChemicalCompositionId { get; set; }
     }
 }

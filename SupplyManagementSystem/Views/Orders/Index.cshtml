@@ -24,9 +24,6 @@
               .Groupable()
               .Sortable()
               .Scrollable(s => s.Enabled(true))
-              .Selectable(selectable => selectable
-                  .Mode(GridSelectionMode.Multiple)
-                  .Type(GridSelectionType.Row))
               .ToolBar(t =>
               {
                   t.Custom().Url(Url.Action("Create")).HtmlAttributes(new {@class = "float-right"}).Text("Добавить заказ");

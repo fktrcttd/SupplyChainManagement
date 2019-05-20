@@ -1,0 +1,46 @@
+﻿@using Kendo.Mvc.UI
+@using SCM.Models
+@model IEnumerable<SCM.Models.Sample>
+
+@{
+    ViewBag.Title = "Образцы";
+}
+
+<h1>Образцы</h1>
+
+<div class="container-fluid">
+    <div class="row">
+        @(Html.Kendo().Grid<Sample>()
+              .Resizable(c => c.Columns(true))
+              .Name("grid")
+              .Columns(columns =>
+              {
+                  columns.Bound(p => p.Title).Title("Заказ");
+                  columns.Bound(p => p.FormatDate).Title("Срок годности");
+                  columns.Bound(p => p.ChemicalCompositionAsString).Title("Хим. состав");
+                  columns.Bound(p => p.Amount).Title("Количество на складе");
+                  columns.Bound(p => p.Weight).Title("Вес образца");
+                  columns.Bound(p => p.Id).Title("Действия").ClientTemplate("<a href='" + @Url.Action("Edit", "Samples", new {id = "#=Id#"}) + "' class='btn btn-xs'>  <i class='fas fa-pen'></i></a>" + "<a href='" + @Url.Action("Delete", "Samples", new {id = "#=Id#"}) + "' class='btn btn-xs m-1'>  <i class='fas fa-trash'></i></a> ");
+              })
+              .Pageable()
+              .Groupable()
+              .Sortable()
+              .Scrollable(s => s.Enabled(true))
+              .ToolBar(t =>
+              {
+                  t.Custom().Url(Url.Action("Create")).HtmlAttributes(new {@class = "float-right"}).Text("Добавить образец");
+                  t.Excel().Text("Экспортировать в Эксель");
+              })
+              .Excel(excel => excel
+                  .FileName("Образцы.xlsx")
+                  .Filterable(true)
+                  .ProxyURL(Url.Action("ExportExcel", "Excel"))
+              )
+              .Filterable()
+              .DataSource(dataSource => dataSource
+                  .Ajax()
+                  .PageSize(10)
+                  .Read(read => read.Action("SamplesRead", "Samples"))
+              ))
+    </div>
+</div>

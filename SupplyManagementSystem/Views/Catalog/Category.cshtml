@@ -1,6 +1,6 @@
 ﻿@using Kendo.Mvc.UI
 @using SCM.DataService.DataContext
-@model IEnumerable<SCM.Models.ChemicalComposition>
+@model IEnumerable<SCM.Models.Sample>
 @{
                                                   
                                                   
@@ -18,31 +18,37 @@
 
 @if (isAdmin)
 {
-    <a class="btn btn-dark-light mb-3 mt-3" href="@Url.Action("Create", "ChemicalCompositions", new {categoryId = categoryId})">Добавить химический состав</a>
+    <div class="row">
+    <a class="btn btn-dark-light mb-3 mt-3 mr-4" href="@Url.Action("Create", "ChemicalCompositions", new {categoryId = categoryId})">Добавить химический состав</a>    
+    <a class="btn btn-dark-light mb-3 mt-3" href="@Url.Action("Create", "Samples", new {categoryId = categoryId})">Добавить новый образец</a>    
+    </div>
+    
 }
 
 <table class="table">
     <tbody>
-    @foreach (var composition in Model)
+    @foreach (var sample in Model)
     {
         <tr>
             <td>
                 @* 130x130 *@
-                <img src=""/>
+                <img src="@sample.ImageLink"/>
             </td>
 
             <td>
-                <div class="row">@composition.Title</div>
-                <div class="row">50 г.</div>
+                <p >Название: @sample.Title</p>
+                <p >Вес: @sample.Weight</p>
+                <p >Срок годности: @sample.FormatDate</p>
+                <p >Хим. состав @sample.ChemicalCompositionAsString</p>
             </td>
 
             <td>
                 @(Html.Kendo().Chart()
-                    .Name($"chart{composition.Id}").Theme("bootstrap")
+                    .Name($"chart{sample.Id}").Theme("bootstrap")
                     .Series(series =>
                             {
 
-                        var elements = composition.CompositionsElements.Select(e => new { category = $"{e.ChemicalElement.Symbol} - {e.Percentage} %", value = e.Percentage });
+                        var elements = sample.ChemicalComposition.CompositionsElements.Select(e => new { category = $"{e.ChemicalElement.Symbol} - {e.Percentage} %", value = e.Percentage });
                         series.Pie(elements)
                         .Labels(labels =>
                         {
@@ -59,7 +65,7 @@
             @if (isAdmin)
             {
                 <td>
-                    <a href=' @Url.Action("Delete", "ChemicalCompositions", new {id = composition.Id}) ' class='btn btn-xs m-1'>  <i class='fas fa-trash'></i></a>
+                    <a href=' @Url.Action("Delete", "Samples", new {id = sample.Id}) ' class='btn btn-xs m-1'>  <i class='fas fa-trash'></i></a>
                 </td>
             }
 

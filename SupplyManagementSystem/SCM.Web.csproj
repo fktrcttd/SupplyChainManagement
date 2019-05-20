@@ -1072,6 +1072,11 @@
     <Content Include="Views\Home\News.cshtml" />
     <Content Include="Views\Shared\Dialog\Modals.cshtml" />
     <Content Include="Views\Clients\Partials\Request.cshtml" />
+    <Content Include="Views\Samples\Create.cshtml" />
+    <Content Include="Views\Samples\Delete.cshtml" />
+    <Content Include="Views\Samples\Details.cshtml" />
+    <Content Include="Views\Samples\Edit.cshtml" />
+    <Content Include="Views\Samples\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

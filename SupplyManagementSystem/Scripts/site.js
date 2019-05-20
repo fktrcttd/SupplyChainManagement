@@ -17,3 +17,8 @@ $(document).on("click",".linked-div",function() {
     
     
 });
+
+$(document).ready(function () {
+    $(".chosen-select").chosen();
+});
+
