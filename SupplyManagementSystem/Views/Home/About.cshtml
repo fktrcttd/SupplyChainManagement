@@ -1,33 +1,6 @@
 ﻿@using Kendo.Mvc.UI
 @using SCM.Models.IdentityModels
 @{
-    ViewBag.Title = "About";
+    ViewBag.Title = "О компании";
 }
 <h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
-
-
-@(Html.Kendo().Grid<ScmUser>()
-      .Name("grid")
-      .Columns(columns =>
-      {
-          columns.Bound(c => c.Name).Width(150);
-          columns.Bound(c => c.Email).Width(150);
-          columns.Bound(c => c.UserName).Width(150);
-          columns.Bound(c => c.PasswordHash).Width(150);
-      })
-      .HtmlAttributes(new {style = "height: 550px;"})
-      .Scrollable()
-      .Groupable()
-      .Sortable()
-      .Pageable(pageable => pageable
-          .Refresh(true)
-          .PageSizes(true)
-          .ButtonCount(5))
-      .DataSource(dataSource => dataSource
-          .Ajax()
-          .Read(read => read.Action("TestKendo", "Home"))
-          .PageSize(50)
-      )
-      )
-

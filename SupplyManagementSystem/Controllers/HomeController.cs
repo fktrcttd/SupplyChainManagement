@@ -80,6 +80,11 @@ namespace SCM.Controllers
             return View();
         }
         
+        public ActionResult News()
+        {
+          
+            return View();
+        }
         
         /*public ActionResult Customers_Read([DataSourceRequest]DataSourceRequest request)
         {

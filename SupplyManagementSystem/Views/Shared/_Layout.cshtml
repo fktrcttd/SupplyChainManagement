@@ -59,6 +59,8 @@
             }
 
             @Html.ActionLink("Каталог", "Index", "Catalog", new {area = ""}, new {@class = menuLinkclass})
+             @Html.ActionLink("О компании", "About", "Home", new {area = ""}, new {@class = menuLinkclass})
+             @Html.ActionLink("Новости", "News", "Home", new {area = ""}, new {@class = menuLinkclass})
         </div>
     </div>
     <div id="page-content-wrapper">
@@ -115,7 +117,7 @@
 
             <!-- Copyright -->
             <div class="footer-copyright text-center py-3">© 2019:
-                <a href="http://icrm-ekb.ru"> Институт стандартных образцов</a>
+                <a href="@Url.Action("Index", "Home")"> Институт стандартных образцов</a>
             </div>
             <!-- Copyright -->
 

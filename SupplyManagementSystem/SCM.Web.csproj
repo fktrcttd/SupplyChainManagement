@@ -1064,6 +1064,7 @@
     <Content Include="Views\SampleCategory\Create.cshtml" />
     <Content Include="Views\Catalog\Index.cshtml" />
     <Content Include="Views\Catalog\Category.cshtml" />
+    <Content Include="Views\Home\News.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
