@@ -69,9 +69,12 @@ namespace SCM.Controllers
         {
             if (ModelState.IsValid)
             {
-                var newChemicalComposition = new ChemicalComposition();
-                newChemicalComposition.Title = model.Name;
-                newChemicalComposition.SampleCategory = db.SampleCategories.FirstOrDefault(c => c.Id == model.CategoryId);
+                var newChemicalComposition = new ChemicalComposition
+                {
+                    Title = model.Name,
+                    SampleCategory = db.SampleCategories.FirstOrDefault(c => c.Id == model.CategoryId)
+                };
+                
                 db.ChemicalCompositions.Add(newChemicalComposition);
                 db.SaveChanges();
 

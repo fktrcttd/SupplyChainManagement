@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using SCM.Core;
@@ -28,6 +30,16 @@ namespace SCM.Models
         /// </summary>
         [Display(Name = "Количество образца на складе")]
         public int Amount { get; set; }
+        
+        [DisplayName("Ссылка на изображение")]
+        public string ImageLink { get; set; }
+
+        [DisplayName("Вес образца")]
+        public double Weight { get; set; }
+
+        [DisplayName("Срок годности")]
+        public DateTime DateTime { get; set; }
+        
         
         
     }

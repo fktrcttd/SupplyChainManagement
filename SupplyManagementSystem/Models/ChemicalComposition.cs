@@ -43,5 +43,8 @@ namespace SCM.Models
         /// Объект категории образцов, к которой привязан данный химический состав
         /// </summary>
         public virtual SampleCategory SampleCategory { set; get; }
+
+
+
     }
 }
