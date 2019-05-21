@@ -271,10 +271,16 @@
     <Compile Include="ViewModels\CatalogViewModel.cs" />
     <Compile Include="ViewModels\ChemicalComposion\ChemicalElementViewModel.cs" />
     <Compile Include="ViewModels\ChemicalComposion\ChemicalCompositionViewModel.cs" />
+    <Compile Include="ViewModels\Clients\ClientGridModel.cs" />
     <Compile Include="ViewModels\Clients\OrderViewModel.cs" />
     <Compile Include="ViewModels\ClientViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
+    <Compile Include="ViewModels\Order\FullOrderViewModel.cs" />
+    <Compile Include="ViewModels\Order\OrderGridModel.cs" />
+    <Compile Include="ViewModels\Order\SimpleOrderViewModel.cs" />
     <Compile Include="ViewModels\SampleCategory\CreateSampleCategoryViewModel.cs" />
+    <Compile Include="ViewModels\Samples\SampleOrderModel.cs" />
+    <Compile Include="ViewModels\Samples\SamplesGridModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1055,11 +1061,6 @@
     <Content Include="Views\Clients\Details.cshtml" />
     <Content Include="Views\Clients\Edit.cshtml" />
     <Content Include="Views\Clients\Index.cshtml" />
-    <Content Include="Views\Orders\Create.cshtml" />
-    <Content Include="Views\Orders\Delete.cshtml" />
-    <Content Include="Views\Orders\Details.cshtml" />
-    <Content Include="Views\Orders\Edit.cshtml" />
-    <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Views\ChemicalCompositions\Create.cshtml" />
     <Content Include="Views\ChemicalCompositions\Delete.cshtml" />
     <Content Include="Views\ChemicalCompositions\Details.cshtml" />
@@ -1077,6 +1078,13 @@
     <Content Include="Views\Samples\Details.cshtml" />
     <Content Include="Views\Samples\Edit.cshtml" />
     <Content Include="Views\Samples\Index.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
+    <Content Include="Views\Orders\Delete.cshtml" />
+    <Content Include="Views\Orders\Details.cshtml" />
+    <Content Include="Views\Orders\Edit.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Orders\Partials\CreateFirstStep.cshtml" />
+    <Content Include="Views\Orders\Partials\CreateSecondStep.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

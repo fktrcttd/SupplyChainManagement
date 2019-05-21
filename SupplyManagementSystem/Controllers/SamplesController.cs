@@ -10,6 +10,7 @@ using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using SCM.DataService.DataContext;
 using SCM.Models;
+using SCM.ViewModels.Samples;
 
 namespace SCM.Controllers
 {
@@ -21,14 +22,32 @@ namespace SCM.Controllers
         // GET: Samples
         public ActionResult Index()
         {
-            var samples = db.Samples.Include(s => s.ChemicalComposition);
+           var samples = db.Samples.Select(s => new SamplesGridModel()
+                      {
+                          Id = s.Id,
+                          Amount = s.Amount,
+                          ChemicalCompositionAsString = s.ChemicalComposition.Title,
+                          ExpiryDate = s.ExpiryDate,
+                          ImageLink = s.ImageLink,
+                          Title = s.Title,
+                          Weight = s.Weight
+                      });
             return View(samples.ToList());
         }
         
         public ActionResult SamplesRead([DataSourceRequest]DataSourceRequest request)
         {
             var context = new AppDataContext();
-            var samples = context.Samples.ToList();
+            var samples = context.Samples.Select(s => new SamplesGridModel()
+            {
+                Id = s.Id,
+                Amount = s.Amount,
+                ChemicalCompositionAsString = s.ChemicalComposition.Title,
+                ExpiryDate = s.ExpiryDate,
+                ImageLink = s.ImageLink,
+                Title = s.Title,
+                Weight = s.Weight
+            }).ToList();
             return Json(samples.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
         }
 

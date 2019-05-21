@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using SCM.Core;
@@ -27,5 +28,8 @@ namespace SCM.Models
         /// Объект образца
         /// </summary>
         public virtual Sample Sample { get; set; }
+        
+        [DisplayName("Количество единиц образца в заказе")]
+        public int Amount { get; set; }
     }
 }

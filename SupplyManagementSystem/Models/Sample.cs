@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 using SCM.Core;
 
 namespace SCM.Models
@@ -41,7 +42,7 @@ namespace SCM.Models
         [DisplayName("Ссылка на изображение")]
         public string ImageLink { get; set; }
 
-        [DisplayName("Вес образца")]
+        [DisplayName("Вес образца, г.")]
         [Range(0, 10000, ErrorMessage = "Вес должен быть в диапазоне 0 - 10000")]
         public double Weight { get; set; }
 

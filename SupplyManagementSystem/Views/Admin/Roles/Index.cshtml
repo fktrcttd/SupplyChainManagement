@@ -38,7 +38,7 @@
               .Filterable()
               .DataSource(dataSource => dataSource
                   .Ajax()
-                  .PageSize(5)
+                  .PageSize(10)
                   //Метод должен быть в контроллере.
                   .Read(read => read.Action("RolesRead", "Admin"))
               ))

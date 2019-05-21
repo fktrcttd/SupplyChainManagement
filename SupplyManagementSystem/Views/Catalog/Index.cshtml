@@ -6,7 +6,7 @@
 @{
     ViewBag.Title = "Каталог";
     var grouped = Model.SampleCategories.Split(3);
-    var compositions = AppDataContext.JoinOrOpen().ChemicalCompositions.ToList();
+    var compositions = AppDataContext.JoinOrOpen().Samples.ToList();
 }
 
 <h2>Каталог</h2>
@@ -41,7 +41,7 @@
                                         int count = 0;
                                         foreach (var c in compositions)
                                         {
-                                            if (c.SampleCategoryId == categoy.Id)
+                                            if (c.ChemicalComposition.SampleCategoryId == categoy.Id)
                                             {
                                                 count++;
                                             }

@@ -5,6 +5,8 @@
 @using SCM.Models.IdentityModels
 @model IEnumerable<SCM.Models.IdentityModels.ScmUser>
 
+@* <i class="fa fa-file-text-o" aria-hidden="true"></i> *@
+
 <div class="container-fluid">
     <div class="row">
         @(Html.Kendo().Grid<ScmUser>().Resizable(c => c.Columns(true))
@@ -16,7 +18,8 @@
                   columns.Bound(p => p.RoleAsString).Title("Роль");
                   columns.Bound(p => p.Id)
                       .Title("Действия")
-                      .ClientTemplate("<a href='" + @Url.Action("EditUser", "Admin", new {id = "#=Id#"}) + "' class='btn btn-xs editDialog'>  <i class='fas fa-pen'></i></a>" + "<a href='" + @Url.Action("DeleteUser", "Admin", new {id = "#=Id#"}) + "' class='btn btn-xs m-1 deleter'>  <i class='fas fa-trash'></i></a> ");
+                      .ClientTemplate("<a href='" + @Url.Action("EditUser", "Admin", new {id = "#=Id#"}) + "' class='btn btn-xs editDialog'>  <i class='fas fa-pen'></i></a>" + 
+                                      "<a href='" + @Url.Action("DeleteUser", "Admin", new {id = "#=Id#"}) + "' class='btn btn-xs m-1 deleter'>  <i class='fas fa-trash'></i></a> ");
               })
               .Pageable()
               .ToolBar(tools =>
@@ -27,12 +30,9 @@
               .Groupable()
               .Sortable().Filterable()
               .Scrollable(s => s.Enabled(true))
-              .Selectable(selectable => selectable
-                  .Mode(GridSelectionMode.Multiple)
-                  .Type(GridSelectionType.Row))
               .DataSource(dataSource => dataSource
                   .Ajax()
-                  .PageSize(5)
+                  .PageSize(10)
                   //Метод должен быть в контроллере.
                   .Read(read => read.Action("UsersRead", "Admin"))
               ))

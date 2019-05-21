@@ -1,16 +1,16 @@
-﻿using SCM.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
+using SCM.Models;
 
-namespace SCM.Models
+namespace SCM.ViewModels.Order
 {
-    public class Order : Entity
+    public class OrderGridModel
     {
+
+        public int Id { get; set; }
         [DisplayName("Наименование заказа")]
         public new string Title { set; get; }
 
@@ -38,16 +38,9 @@ namespace SCM.Models
             return IsFinished ? "Завершен": "Не завершен";
         }
 
-        /// <summary>
-        /// Образцы в заказе
-        /// </summary>
-        public ICollection<OrdersSample> OrdersSamples { get; set; }
-        
-        public virtual Client Client { get; set; }
 
-        [ForeignKey(nameof(Client))]
-        [DisplayName("Заказчик")]
-        [Required(ErrorMessage = "Обязательное поле")]
-        public int ClientId { get; set; }
+        public string ClientOrganization { get; set; }
+        
+        
     }
 }

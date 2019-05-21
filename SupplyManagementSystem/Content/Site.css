@@ -32,3 +32,17 @@ textarea {
 .linked-div{
     cursor: pointer;
 }
+
+.chosen-container{
+    max-width: 600px !important;
+}
+
+.k-grid .k-grid-content {
+    min-height: 100px;
+    max-height: 300px;
+}
+
+.k-grid td{
+    padding: 0px !important;
+    padding-left: 10px!important
+}

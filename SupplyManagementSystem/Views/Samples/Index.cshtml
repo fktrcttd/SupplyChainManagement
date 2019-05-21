@@ -1,6 +1,7 @@
 ﻿@using Kendo.Mvc.UI
 @using SCM.Models
-@model IEnumerable<SCM.Models.Sample>
+@using SCM.ViewModels.Samples
+@model IEnumerable<SCM.ViewModels.Samples.SamplesGridModel>
 
 @{
     ViewBag.Title = "Образцы";
@@ -10,12 +11,12 @@
 
 <div class="container-fluid">
     <div class="row">
-        @(Html.Kendo().Grid<Sample>()
+        @(Html.Kendo().Grid<SamplesGridModel>()
               .Resizable(c => c.Columns(true))
               .Name("grid")
               .Columns(columns =>
               {
-                  columns.Bound(p => p.Title).Title("Заказ");
+                  columns.Bound(p => p.Title).Title("Образец");
                   columns.Bound(p => p.FormatDate).Title("Срок годности");
                   columns.Bound(p => p.ChemicalCompositionAsString).Title("Хим. состав");
                   columns.Bound(p => p.Amount).Title("Количество на складе");

@@ -12,6 +12,7 @@ using Kendo.Mvc.UI;
 using SCM.DataService.DataContext;
 using SCM.Models;
 using SCM.ViewModels.Clients;
+using SCM.ViewModels.Order;
 
 namespace SCM.Controllers
 {
@@ -22,7 +23,17 @@ namespace SCM.Controllers
         // GET: Clients
         public ActionResult Index()
         {
-            return View(db.Clients.ToList());
+            var clients = db.Clients.Select(c => new ClientGridModel()
+            {
+                Id = c.Id,
+                Email = c.Email,
+                Name = c.Name,
+                Organization = c.Organization,
+                Phone = c.Phone,
+                Check = c.Check,
+                Inn = c.Inn
+            }).ToList();
+            return View(clients);
         }
 
         // GET: Clients/Details/5
@@ -121,9 +132,17 @@ namespace SCM.Controllers
         }
         public ActionResult ClientsRead([DataSourceRequest]DataSourceRequest request)
         {
-            var context = new AppDataContext();
-            var users = context.Clients.ToList();
-            return Json(users.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+            var clients = db.Clients.Select(c => new ClientGridModel()
+            {
+                Id = c.Id,
+                Email = c.Email,
+                Name = c.Name,
+                Organization = c.Organization,
+                Phone = c.Phone,
+                Check = c.Check,
+                Inn = c.Inn
+            }).ToList();
+            return Json(clients.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
         }
         protected override void Dispose(bool disposing)
         {
@@ -142,6 +161,12 @@ namespace SCM.Controllers
         [HttpPost]
         public ActionResult Order(OrderViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                var errorMarkup = "<div class=\"container\"><h3>Ошибка!</h3>"+"<p>Проверьте введенные данные и повторите отправку</p></div>";
+                return Content(errorMarkup);
+            }
+            
             
             //standartnye.obraztsy@yandex.ru
             //sormSORM
@@ -171,7 +196,17 @@ namespace SCM.Controllers
             // логин и пароль
             smtp.Credentials = new NetworkCredential("standartnye.obraztsy@yandex.ru", "sormSORM");
             smtp.EnableSsl = true;
-            //smtp.Send(m);
+            
+            //закомментировать и письма не будут отправляться
+            smtp.Send(m);
+            
+            var client = new Client();
+            client.Name = model.Name;
+            client.Phone = model.Phone;
+            client.Organization = "Неизвестно";
+
+            db.Clients.Add(client);
+            db.SaveChanges();
             var markup = "<div class=\"container\"><h3>Спасибо за заявку!</h3>"+"<p>Менеджер скоро с вами свяжется!</p></div>";
             return Content(markup);
         }
