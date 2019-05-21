@@ -1,6 +1,7 @@
 ﻿@using Kendo.Mvc.UI
 @using SCM.Models
-@model IEnumerable<SCM.Models.Client>
+@using SCM.ViewModels.Clients
+@model IEnumerable<SCM.ViewModels.Clients.ClientGridModel>
 
 @{
     ViewBag.Title = "Клиенты";
@@ -10,46 +11,48 @@
 
 @*Грид*@
 
-
 <div class="container-fluid">
     <div class="row">
-        @(Html.Kendo().Grid<Client>().Resizable(c => c.Columns(true))
+        @(Html.Kendo().Grid<ClientGridModel>()
+              .Resizable(c => c.Columns(true))
               .Name("grid")
               .Columns(columns =>
               {
-                  columns.Bound(p => p.Name).Title("ФИО");
+                  columns.Bound(p => p.Name).Title("ФИО").HtmlAttributes(new {@class= "small-row"});
                   columns.Bound(p => p.Organization).Title("Организация");
                   columns.Bound(p => p.Inn).Title("ИНН");
                   columns.Bound(p => p.Check).Title("Расчетный счет");
                   columns.Bound(p => p.Phone).Title("Телефон");
-                  columns.Bound(p => p.Address).Title("E-mail");
-                  columns.Bound(p => p.Id).Title("Действия").ClientTemplate("<a href='" + @Url.Action("Edit", "Clients", new {id = "#=Id#"}) + "' class='btn btn-xs'>  <i class='fas fa-pen'></i></a>" + "<a href='" + @Url.Action("Delete", "Clients", new {id = "#=Id#"}) + "' class='btn btn-xs m-1'>  <i class='fas fa-trash'></i></a> ");
+                  columns.Bound(p => p.Email).Title("E-mail");
+                  columns.Bound(p => p.Id).Title("Действия")
+                      .ClientTemplate("<div class=\"row\"><a href='" + @Url.Action("Edit", "Clients", new {id = "#=Id#"}) + "' class='btn btn-xs'>  <i class='fa fa-pen'></i></a>" + 
+                                      "<a href='" + @Url.Action("Delete", "Clients", new {id = "#=Id#"}) + "' class='btn btn-xs m-1'>  <i class='fa fa-trash'></i></a> " +
+                                      "<a href='" + @Url.Action("Index", "Orders", new {clientId = "#=Id#"}) + "' class='btn btn-xs m-1'>  <i class='fa fa-id-card'></i></a> "+
+                      "</div>"
+                  );
               })
               
               .ToolBar(tools => tools.Excel().Text("Экспортировать в Эксель"))
               .Groupable()
               .Sortable()
-              .Scrollable(s => s.Enabled(true))
-              .Selectable(selectable => selectable
-                  .Mode(GridSelectionMode.Multiple)
-                  .Type(GridSelectionType.Row))
+              .Scrollable(s => s.Enabled(true).Height(530))
               .ToolBar(t =>
               {
                   t.Custom().Url(Url.Action("Create")).HtmlAttributes(new {@class = "float-right"}).Text("Добавить клиента");
               })
               .Excel(excel => excel
-                      .FileName("Цехи.xlsx")    
-                      .Filterable(true)
-                      .ProxyURL(Url.Action("ExportExcel", "Excel"))
+                  .FileName("Клиенты.xlsx")    
+                  .Filterable(true)
+                  .ProxyURL(Url.Action("ExportExcel", "Excel"))
               )
               .Pageable()
               .Filterable()
               .DataSource(dataSource => dataSource
                   .Ajax()
-                  .PageSize(5)
+                  .PageSize(10)
                   //Метод должен быть в контроллере.
                   .Read(read => read.Action("ClientsRead", "Clients"))
               ))
-        
+
     </div>
 </div>

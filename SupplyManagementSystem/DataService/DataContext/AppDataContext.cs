@@ -274,5 +274,6 @@ namespace SCM.DataService.DataContext
         }
         #endregion
 
+        public System.Data.Entity.DbSet<SCM.Models.Sample> Samples { get; set; }
     }
 }

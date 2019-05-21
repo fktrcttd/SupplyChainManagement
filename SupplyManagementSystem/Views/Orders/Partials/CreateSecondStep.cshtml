@@ -1,0 +1,69 @@
+﻿@using System.ServiceModel.Channels
+@model SCM.ViewModels.Order.FullOrderViewModel
+@{
+    var message = (string) ViewBag.Message;
+}
+@using (Ajax.BeginForm("CreateStageTwo", "Orders", new AjaxOptions {HttpMethod = "POST", UpdateTargetId = "wizard", OnSuccess = ""}))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Заказ. Шаг 2</h4>
+        <hr/>
+        @Html.ValidationSummary(true, message, new {@class = "text-danger"})
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new {htmlAttributes = new {@class = "form-control", @disabled = "disabled"}})
+                @Html.ValidationMessageFor(model => model.Title, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        @Html.HiddenFor(model => model.Title)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ClientTitle, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ClientTitle, new {htmlAttributes = new {@class = "form-control", @disabled = "disabled"}})
+                @Html.ValidationMessageFor(model => model.ClientTitle, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        @Html.HiddenFor(model => model.ClientId)
+        @Html.HiddenFor(model => model.ClientTitle)
+
+        @for (var index = 0; index < Model.Samples.Count; index++)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.Samples[index].Amount, $"Кол-во образца {Model.Samples[index].Title}", htmlAttributes: new {@class = "control-label col-md-6"})
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.Samples[index].Amount, new {htmlAttributes = new {@class = "form-control", aria_describedby = $"sample-description-{index}"}})
+                    <small id="sample-description-@(index)" class="form-text text-muted">Доступно для заказа @(Model.Samples[index].InStock)</small>
+                    @Html.ValidationMessageFor(model => model.Samples[index].Amount, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            @Html.HiddenFor(model => model.Samples[index].SampleId)
+            @Html.HiddenFor(model => model.Samples[index].Title)
+            @Html.HiddenFor(model => model.Samples[index].InStock)
+            @Html.HiddenFor(model => model.Samples[index].Amount)
+           
+        }
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Сохранить" class="btn btn-default"/>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+$(document).ready(function () {
+
+    $(".chosen-select").chosen({
+         width: "100%",
+        no_results_text: "Ничего не найдено",
+        placeholder_text_multiple: "Выберите несколько параметров",
+    });
+});
+</script>

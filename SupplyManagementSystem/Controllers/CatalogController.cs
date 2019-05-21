@@ -25,11 +25,12 @@ namespace SCM.Controllers
         public ActionResult Category(int id)
         {
             var category = _context.SampleCategories.FirstOrDefault(sampleCategory => sampleCategory.Id == id);
-            var compositions = _context.ChemicalCompositions.Where(c => c.SampleCategoryId == category.Id).ToList();
+
+            var samples = _context.Samples.Where(c => c.ChemicalComposition.SampleCategoryId == category.Id).ToList();
 
             ViewBag.CategoryId = id;
             ViewBag.CategoryName = category.Title;
-            return View(compositions);
+            return View(samples);
         }
 
         

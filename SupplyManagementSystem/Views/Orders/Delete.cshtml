@@ -1,16 +1,24 @@
 ﻿@model SCM.Models.Order
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Удалить заказ";
 }
 
-<h2>Удаление</h2>
+<h2>@Model.Title</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Вы уверены, что хотите удалить заказ @Model.Title</h3>
 <div>
-    <h4>Заказы</h4>
+    <h4>@Model.Title</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Client.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Client.Name)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Title)
         </dt>
@@ -28,27 +36,20 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.OrganizationClient)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OrganizationClient)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.IsFinished)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.IsFinished)
         </dd>
+
     </dl>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-dark-light" /> |
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
             @Html.ActionLink("Вернуться к списку заказов", "Index")
         </div>
     }

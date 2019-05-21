@@ -223,6 +223,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\SampleCategoryController.cs" />
+    <Compile Include="Controllers\SamplesController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="DataService\Additions\CascadeDeleteProcessor.cs" />
     <Compile Include="DataService\Additions\DummyCondition.cs" />
@@ -270,9 +271,16 @@
     <Compile Include="ViewModels\CatalogViewModel.cs" />
     <Compile Include="ViewModels\ChemicalComposion\ChemicalElementViewModel.cs" />
     <Compile Include="ViewModels\ChemicalComposion\ChemicalCompositionViewModel.cs" />
+    <Compile Include="ViewModels\Clients\ClientGridModel.cs" />
+    <Compile Include="ViewModels\Clients\OrderViewModel.cs" />
     <Compile Include="ViewModels\ClientViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
+    <Compile Include="ViewModels\Order\FullOrderViewModel.cs" />
+    <Compile Include="ViewModels\Order\OrderGridModel.cs" />
+    <Compile Include="ViewModels\Order\SimpleOrderViewModel.cs" />
     <Compile Include="ViewModels\SampleCategory\CreateSampleCategoryViewModel.cs" />
+    <Compile Include="ViewModels\Samples\SampleOrderModel.cs" />
+    <Compile Include="ViewModels\Samples\SamplesGridModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -740,6 +748,8 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1003,6 +1013,7 @@
     <Content Include="Scripts\Kendo\messages\kendo.messages.ru-RU.min.js.map" />
     <Content Include="Scripts\Kendo\pako_deflate.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\site.js" />
     <Content Include="Views\Admin\Roles\Create.cshtml" />
     <Content Include="Views\Admin\Roles\Edit.cshtml" />
     <Content Include="Views\Admin\Roles\Index.cshtml" />
@@ -1050,11 +1061,6 @@
     <Content Include="Views\Clients\Details.cshtml" />
     <Content Include="Views\Clients\Edit.cshtml" />
     <Content Include="Views\Clients\Index.cshtml" />
-    <Content Include="Views\Orders\Create.cshtml" />
-    <Content Include="Views\Orders\Delete.cshtml" />
-    <Content Include="Views\Orders\Details.cshtml" />
-    <Content Include="Views\Orders\Edit.cshtml" />
-    <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Views\ChemicalCompositions\Create.cshtml" />
     <Content Include="Views\ChemicalCompositions\Delete.cshtml" />
     <Content Include="Views\ChemicalCompositions\Details.cshtml" />
@@ -1065,6 +1071,20 @@
     <Content Include="Views\Catalog\Index.cshtml" />
     <Content Include="Views\Catalog\Category.cshtml" />
     <Content Include="Views\Home\News.cshtml" />
+    <Content Include="Views\Shared\Dialog\Modals.cshtml" />
+    <Content Include="Views\Clients\Partials\Request.cshtml" />
+    <Content Include="Views\Samples\Create.cshtml" />
+    <Content Include="Views\Samples\Delete.cshtml" />
+    <Content Include="Views\Samples\Details.cshtml" />
+    <Content Include="Views\Samples\Edit.cshtml" />
+    <Content Include="Views\Samples\Index.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
+    <Content Include="Views\Orders\Delete.cshtml" />
+    <Content Include="Views\Orders\Details.cshtml" />
+    <Content Include="Views\Orders\Edit.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Orders\Partials\CreateFirstStep.cshtml" />
+    <Content Include="Views\Orders\Partials\CreateSecondStep.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

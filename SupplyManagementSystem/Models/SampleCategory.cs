@@ -15,8 +15,6 @@ namespace SCM.Models
         [DisplayName("Наименование категории")]
         public new string Title { set; get; }
         
-        [DisplayName("Образцы")]
-        public virtual ICollection<Sample> Samples { get; set; }
         
         [DisplayName("Базовые химические элементы")]
         public virtual ICollection<ChemicalElement> ChemicalElements { get; set; }

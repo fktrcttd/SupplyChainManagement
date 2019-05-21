@@ -1,81 +1,47 @@
-﻿@model IEnumerable<SCM.Models.Sample>
+﻿@using Kendo.Mvc.UI
+@using SCM.Models
+@using SCM.ViewModels.Samples
+@model IEnumerable<SCM.ViewModels.Samples.SamplesGridModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Образцы";
 }
 
-<h2>Index</h2>
+<h1>Образцы</h1>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ColorificValue)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Weight)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DeleteForbidden)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EditForbidden)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsPublish)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastModifed)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ColorificValue)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Weight)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeleteForbidden)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EditForbidden)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsPublish)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastModifed)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>
+<div class="container-fluid">
+    <div class="row">
+        @(Html.Kendo().Grid<SamplesGridModel>()
+              .Resizable(c => c.Columns(true))
+              .Name("grid")
+              .Columns(columns =>
+              {
+                  columns.Bound(p => p.Title).Title("Образец");
+                  columns.Bound(p => p.FormatDate).Title("Срок годности");
+                  columns.Bound(p => p.ChemicalCompositionAsString).Title("Хим. состав");
+                  columns.Bound(p => p.Amount).Title("Количество на складе");
+                  columns.Bound(p => p.Weight).Title("Вес образца");
+                  columns.Bound(p => p.Id).Title("Действия").ClientTemplate("<a href='" + @Url.Action("Edit", "Samples", new {id = "#=Id#"}) + "' class='btn btn-xs'>  <i class='fas fa-pen'></i></a>" + "<a href='" + @Url.Action("Delete", "Samples", new {id = "#=Id#"}) + "' class='btn btn-xs m-1'>  <i class='fas fa-trash'></i></a> ");
+              })
+              .Pageable()
+              .Groupable()
+              .Sortable()
+              .Scrollable(s => s.Enabled(true))
+              .ToolBar(t =>
+              {
+                  t.Custom().Url(Url.Action("Create")).HtmlAttributes(new {@class = "float-right"}).Text("Добавить образец");
+                  t.Excel().Text("Экспортировать в Эксель");
+              })
+              .Excel(excel => excel
+                  .FileName("Образцы.xlsx")
+                  .Filterable(true)
+                  .ProxyURL(Url.Action("ExportExcel", "Excel"))
+              )
+              .Filterable()
+              .DataSource(dataSource => dataSource
+                  .Ajax()
+                  .PageSize(10)
+                  .Read(read => read.Action("SamplesRead", "Samples"))
+              ))
+    </div>
+</div>

@@ -1,16 +1,24 @@
 ﻿@model SCM.Models.Sample
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Удаление образца";
 }
 
-<h2>Delete</h2>
+<h2>@Model.Title</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Вы уверены что хотите удалить образец @Model.Title ?</h3>
 <div>
-    <h4>Sample</h4>
+    <h4>Образец</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ChemicalComposition.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChemicalComposition.Title)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Title)
         </dt>
@@ -20,27 +28,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ColorificValue)
+            @Html.DisplayNameFor(model => model.Amount)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ColorificValue)
+            @Html.DisplayFor(model => model.Amount)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.DisplayNameFor(model => model.ImageLink)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Price)
+            @Html.DisplayFor(model => model.ImageLink)
         </dd>
 
         <dt>
@@ -52,35 +52,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DeleteForbidden)
+            @Html.DisplayNameFor(model => model.ExpiryDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DeleteForbidden)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EditForbidden)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EditForbidden)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsPublish)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsPublish)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastModifed)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastModifed)
+            @Html.DisplayFor(model => model.ExpiryDate)
         </dd>
 
     </dl>
@@ -89,8 +65,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Вернуться к списку", "Index")
         </div>
     }
 </div>

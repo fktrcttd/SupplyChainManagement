@@ -1,32 +1,40 @@
 ﻿@using Kendo.Mvc.UI
 @using SCM.Models
-@model IEnumerable<SCM.Models.Order>
+@using SCM.ViewModels.Order
+@model IEnumerable<SCM.ViewModels.Order.OrderGridModel>
 
 @{
-    ViewBag.Title = "Index";
+    var clientId = (int?) ViewBag.ClientId;
+    var clientName = (string)ViewBag.ClientName;
+    var title = string.IsNullOrWhiteSpace(clientName) ? "Заказы" : $"Заказы клиента {clientName}";
+    
+    ViewBag.Title = title;
 }
 
-<h1>Заказы</h1>
+<h1>@title</h1>
 
 <div class="container-fluid">
     <div class="row">
-        @(Html.Kendo().Grid<Order>().Resizable(c => c.Columns(true))
+        @(Html.Kendo().Grid<OrderGridModel>().Resizable(c => c.Columns(true))
               .Name("grid")
               .Columns(columns =>
               {
                   columns.Bound(p => p.Title).Title("Заказ");
                   columns.Bound(p => p.FormatDate).Title("Дата заказа");
-                  columns.Bound(p => p.OrganizationClient).Title("Организация клиента");
+                  columns.Bound(p => p.ClientOrganization).Title("Организация клиента");
                   columns.Bound(p => p.IsFinishedAsString).Title("Статус");
-                  columns.Bound(p => p.Id).Title("Действия").ClientTemplate("<a href='" + @Url.Action("Edit", "Orders", new {id = "#=Id#"}) + "' class='btn btn-xs'>  <i class='fas fa-pen'></i></a>" + "<a href='" + @Url.Action("Delete", "Orders", new {id = "#=Id#"}) + "' class='btn btn-xs m-1'>  <i class='fas fa-trash'></i></a> ");
+                  columns.Bound(p => p.Id).Title("Действия")
+                      .ClientTemplate(
+                          "<a href='" + @Url.Action("Edit", "Orders", new {id = "#=Id#"}) + "' class='btn btn-xs'>  <i class='fa fa-pen'></i></a>" +
+                           "<a href='" + @Url.Action("Delete", "Orders", new {id = "#=Id#"}) + "' class='btn btn-xs m-1'>  <i class='fa fa-trash'></i></a>"+
+                           "<a href='" + @Url.Action("Details", "Orders", new {id = "#=Id#"}) + "' class='btn btn-xs m-1'>  <i class='fa fa-info-circle'></i></a>"
+                               
+                  );
               })
               .Pageable()
               .Groupable()
               .Sortable()
               .Scrollable(s => s.Enabled(true))
-              .Selectable(selectable => selectable
-                  .Mode(GridSelectionMode.Multiple)
-                  .Type(GridSelectionType.Row))
               .ToolBar(t =>
               {
                   t.Custom().Url(Url.Action("Create")).HtmlAttributes(new {@class = "float-right"}).Text("Добавить заказ");
@@ -40,56 +48,9 @@
               .Filterable()
               .DataSource(dataSource => dataSource
                   .Ajax()
-                  .PageSize(5)
+                  .PageSize(10)
                   //Метод должен быть в контроллере.
-                  .Read(read => read.Action("OrdersRead", "Orders"))
+                  .Read(read => read.Action("OrdersRead", "Orders", new {clientId = clientId}))
               ))
     </div>
 </div>
-
-
-@*<p>
-        @Html.ActionLink("Доавить новый заказ", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.QuantitySample)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsFinished)
-            </th>
-
-            <th></th>
-        </tr>
-
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.QuantitySample)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsFinished)
-            </td>
-
-            <td>
-                @Html.ActionLink("Редактировать", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Подробнее", "Details", new { id=item.Id }) |
-                @Html.ActionLink("Удалить", "Delete", new { id=item.Id })
-            </td>
-        </tr>
-    }
-
-    </table>*@

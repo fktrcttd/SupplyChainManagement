@@ -8,7 +8,10 @@ namespace SCM
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/Scripts/jquery-{version}.js", "~/Scripts/chosen.jquery.js"));
+                "~/Scripts/jquery-{version}.js", 
+                "~/Scripts/chosen.jquery.js",
+                "~/Scripts/jquery.unobtrusive*"
+                ));
             
             
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(

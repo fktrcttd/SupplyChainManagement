@@ -1,0 +1,63 @@
+﻿@model SCM.ViewModels.Clients.OrderViewModel
+
+@using (Ajax.BeginForm("Order", "Clients", new AjaxOptions {HttpMethod = "POST", UpdateTargetId = "request-content", OnSuccess = "request_modal_success"}))
+{
+    <div class="modal-body">
+        <div class="row form-group">
+            <div class="col-md-12">
+                <div class="input-group">
+                    @Html.TextBoxFor(m => m.City, new {@class = "form-control", @placeholder = "Введите ваш город", required = "required", type = "text"})
+                </div>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-12">
+                <div class="input-group">
+                    @Html.TextBoxFor(m => m.Name, new {@class = "form-control", @placeholder = "Введите ваше имя", required = "required", type = "text"})
+                </div>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-12">
+                <div class="input-group">
+                    @Html.TextBoxFor(m => m.Phone, new {@class = "form-control", @placeholder = "Введите номер телефона", required = "required"})
+                </div>
+            </div>
+        </div>
+
+  <div class="row form-group">
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            @Html.TextAreaFor(m => m.Comment, new {@class = "form-control", @placeholder = "Комментарий к заказу"})
+                        </div>
+                    </div>
+                </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.PersonalDataAgreement, htmlAttributes: new {@class = "control-label col-md-12"})
+            <div class="col-md-12">
+                @Html.CheckBoxFor(model => model.PersonalDataAgreement, new {required = "required", @checked = "checked"})
+                @Html.ValidationMessageFor(model => model.PersonalDataAgreement, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+      
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Закрыть</button>
+        <button type="submit" class="btn btn-success" name="cmd"><i class="fa fa-check"></i>&nbsp;Отправить</button>
+    </div>
+}
+
+<script>
+function request_modal_success() {
+ 
+  console.log("success");
+  
+  //
+  // $('#request_modal.request-content').html(markup);
+   //$('.close').click();
+}   
+
+</script>

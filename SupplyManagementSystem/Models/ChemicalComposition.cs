@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace SCM.Models
 {
@@ -19,12 +20,14 @@ namespace SCM.Models
         /// <summary>
         /// Связки химических элементов и составов, в которых участвует данный элемент
         /// </summary>
+        [JsonIgnore]
         public virtual ICollection<CompositionsElement> CompositionsElements { set; get; }
         
         /// <summary>
         /// Ключ категории образцов, к которой привязан химический состав
         /// </summary>
         [ForeignKey("SampleCategory")]
+        [JsonIgnore]
         public int SampleCategoryId { set; get; }
         
         /// <summary>
@@ -42,9 +45,8 @@ namespace SCM.Models
         /// <summary>
         /// Объект категории образцов, к которой привязан данный химический состав
         /// </summary>
+        [JsonIgnore]
         public virtual SampleCategory SampleCategory { set; get; }
-
-
 
     }
 }
