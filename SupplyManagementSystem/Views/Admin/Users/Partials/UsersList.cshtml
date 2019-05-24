@@ -26,6 +26,7 @@
               {
                   tools.Excel().Text("Экспортировать к Эксель"); 
                   tools.Custom().Url(Url.Action("CreateUser", "Admin")).HtmlAttributes(new {@class = "float-right", id = "Add"}).Text("Добавить пользователя");
+                  tools.Custom().Url(Url.Action("RoleList", "Admin")).HtmlAttributes(new {@class = "float-right"}).Text("Роли пользователей");
               })
               .Groupable()
               .Sortable().Filterable()

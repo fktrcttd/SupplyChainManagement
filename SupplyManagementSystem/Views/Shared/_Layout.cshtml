@@ -56,7 +56,6 @@
             @if (User.IsInRole("admin"))
             {
                 @Html.ActionLink("Пользователи", "UsersList", "Admin", new {area = ""}, new {@class = menuLinkclass})
-                @Html.ActionLink("Роли пользователей", "RoleList", "Admin", new {area = ""}, new {@class = menuLinkclass})
             }
 
             @Html.ActionLink("Каталог", "Index", "Catalog", new {area = ""}, new {@class = menuLinkclass})
